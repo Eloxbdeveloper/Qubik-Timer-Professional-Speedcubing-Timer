@@ -1,0 +1,181 @@
+/* ==========================================================================
+   SECCIÓN: PANTALLA PRINCIPAL DEL CRONÓMETRO (MAIN TIMER DISPLAY)
+   ========================================================================== */
+
+/**
+ * Visualizador numérico principal del cronómetro.
+ * - Tipografía premium de alto contraste ("Oxanium") con un peso ultra-ligero (200).
+ * - Arquitectura de capas: Asignado a un z-index de 2 para mantenerlo en el mismo nivel 
+ * de la capa de ocultamiento estructural (.ocultar), asegurando que durante la resolución 
+ * quede exactamente por encima de los paneles analíticos traseros sin romper el enfoque.
+ */
+.time {
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    margin: auto;
+    color: #f5f5f5;
+
+    font-size: 150px;
+    font-weight: 200;
+    
+    font-family: 'Oxanium', sans-serif;
+    
+    position: relative;
+    z-index: 2; 
+}
+
+/* ==========================================================================
+   SECCIÓN: ENTRADA MANUAL DE TIEMPOS (MANUALLY TIMES INPUT)
+   ========================================================================== */
+
+/**
+ * Input de inserción manual para tiempos o sesiones externas.
+ * - Estado Base: Oculto por defecto (`display: none`), activable mediante el menú de configuración.
+ * - Estética: Diseño futurista traslúcido con desenfoque de fondo (Glassmorphism) y sombras triples 
+ * (externa oscura, resplandor perimetral claro y sombra interna de profundidad).
+ */
+.manually_times {
+    display: none;
+    width: 70%;
+
+    margin: 20px auto;
+    padding: 0 10px;
+
+    border-radius: 10px;
+    background: rgba(10, 10, 10, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    color: #eaeaea;
+
+    font-family: "Oxanium", sans-serif;
+    font-size: 70px;
+    font-weight: 500;
+
+    text-align: center;
+    outline: none;
+
+    backdrop-filter: blur(10px);
+
+    /* Sistema premium de sombreado multicapa */
+    box-shadow:
+        0 0 25px rgba(0, 0, 0, .55),
+        0 0 18px rgba(255, 255, 255, 0.08),
+        inset 0 0 12px rgba(255, 255, 255, 0.03);
+
+    transition: 0.2s ease;
+}
+
+/* Transición perimetral sutil al pasar el cursor */
+.manually_times:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Estado Activo/Enfoque: Incrementa el brillo del borde y suaviza la sombra interna */
+.manually_times:focus {
+    border-color: rgba(255, 255, 255, 0.25);
+
+    box-shadow:
+        0 0 25px rgba(255, 255, 255, 0.10),
+        inset 0 0 10px rgba(255, 255, 255, 0.02);
+}
+
+/**
+ * Normalización de Inputs Numéricos:
+ * Elimina de raíz las flechas incrementales nativas (spin buttons) en motores Webkit (Chrome, Safari, Edge)
+ * para preservar la simetría y limpieza visual del diseño tipográfico.
+ */
+.manually_times::-webkit-outer-spin-button,
+.manually_times::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/**
+ * Utilidad global de ocultación estricta.
+ */
+.invisible {
+    display: none;
+}
+
+/* ==========================================================================
+   SECCIÓN: CONTROLES AUXILIARES (UTILITY BUTTONS)
+   ========================================================================== */
+
+/**
+ * Envoltura horizontal para botones de acción rápida bajo el Timer (Ej: Compartir, Copiar, Eliminar).
+ */
+.botones {
+    display: flex;
+    margin: auto;
+}
+
+/**
+ * Botones cuadrados utilitarios de la interfaz.
+ * - Implementa una micro-flotación vertical (`translateY`) y cambio de opacidad en hover 
+ * para enriquecer la experiencia interactiva del speedcuber.
+ */
+.btn2 {
+    background: rgba(255, 255, 255, 0.03);
+    color: #999;
+    outline: none;
+
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 14px;
+
+    text-align: center;
+    padding: 5px;
+
+    height: 42px;
+    width: 42px;
+
+    margin: 20px 10px;
+    margin-bottom: 10px;
+
+    transition: .18s ease;
+    user-select: none;
+}
+ 
+.btn2:hover {
+    cursor: pointer;
+    color: white;
+
+    border-color: rgba(255, 255, 255, .2);
+    background: rgba(255, 255, 255, .06);
+
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   SECCIÓN: ANIMACIONES Y EFECTOS DINÁMICOS (MICRO-INTERACTIONS)
+   ========================================================================== */
+
+/**
+ * Disparador de estado para feedback táctil de copiado.
+ * Se inyecta temporalmente mediante JavaScript en el botón correspondiente tras guardar la mezcla en el portapapeles.
+ */
+.animacion-copiado {
+    animation: parpadeoVerde 0.8s ease-in-out;
+}
+
+/**
+ * Animación de Parpadeo Verde (Feedback del Clipboard):
+ * Genera una curva de aceleración donde el botón destella rápidamente en color verde esmeralda 
+ * con un sutil resplandor de neón a un tercio de la animación, volviendo gradualmente a su estado base oscuro.
+ */
+@keyframes parpadeoVerde {
+    0% {
+        background-color: initial; 
+    }
+    30% {
+        background-color: #2ecc71; 
+        box-shadow: 0 0 10px #2ecc71; 
+    }
+    100% {
+        background-color: initial; 
+        box-shadow: none;
+    }
+}

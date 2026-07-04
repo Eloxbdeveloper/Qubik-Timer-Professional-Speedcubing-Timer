@@ -1,0 +1,360 @@
+/* ==========================================================================
+   SECCIÓN: PANEL DE HISTORIAL DE TIEMPOS (SOLVES DATA PANEL)
+   ========================================================================== */
+
+/**
+ * Tarjeta contenedora de datos estructurales (Listado de tiempos).
+ * - Deshabilita la selección de texto para evitar distorsiones visuales en clics rápidos.
+ * - Implementación de Glassmorphism alineada con la estética general de la aplicación.
+ */
+.contenedor_data {
+    user-select: none;
+    overflow: hidden;
+
+    padding: 12px 20px;
+    padding-bottom: 0;
+
+    display: flex;
+    margin: auto;
+
+    width: 91%;
+    height: 70%; 
+
+    border-radius: 28px;
+    background: rgba(255, 255, 255, .04);
+    backdrop-filter: blur(14px);
+
+    border: 1px solid rgba(255, 255, 255, .05);
+    box-shadow: 0 0 25px rgba(0, 0, 0, .35);
+}
+
+/**
+ * Elemento interno que actúa como viewport de scroll para las filas de tiempos.
+ * - Maneja transiciones fluidas de fondo y posicionamiento (layout) para el estado dinámico vacío.
+ */
+.archivador {
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+    gap: 8px;
+
+    overflow-y: scroll;
+    
+    /* Suavizado de transición cuando se altera el estado del componente mediante JavaScript */
+    transition: background 0.3s ease, justify-content 0.3s ease;
+}
+
+/**
+ * Estado Dinámico Vacío (.archivador.vacio):
+ * Se activa mediante JS cuando la sesión actual no registra resoluciones.
+ * - Inyecta una ilustración central descriptiva ("Start Solving!").
+ * - Altera el flujo vertical a un centrado absoluto y deshabilita el scroll temporalmente.
+ */
+.archivador.vacio {
+    background-image: url('../images/solves.png'); 
+    background-position: center 45%; /* Desviación ergonómica sutil hacia arriba */
+    background-repeat: no-repeat;
+    background-size: 240px; 
+    
+    /* Centrado absoluto del espacio de trabajo alternativo */
+    justify-content: center; 
+    align-items: center;
+    
+    overflow-y: hidden; 
+}
+
+/* --------------------------------------------------------------------------
+   ESTILIZACIÓN DE LA BARRA DE DESPLAZAMIENTO (ARCHIVADOR SCROLLBAR)
+   -------------------------------------------------------------------------- */
+
+.archivador::-webkit-scrollbar {
+    width: 8px;
+}
+
+.archivador::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.archivador::-webkit-scrollbar-thumb {
+    background: #3b3b3b;
+    border-radius: 999px;
+}
+
+.archivador::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* ==========================================================================
+   SECCIÓN: FILAS DE RESOLUCIONES HISTÓRICAS (SOLVE ITEMS)
+   ========================================================================== */
+
+/**
+ * Fila individual de datos. Mapea un tiempo específico del archivador.
+ * Distribuye los componentes en los extremos (Métricas izquierda / Botones derecha).
+ */
+.data {
+    user-select: none;
+    width: 98%;
+
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+
+    border-bottom: 1px solid rgba(255, 255, 255, .03);
+}
+
+/**
+ * Envoltura horizontal del identificador y el tiempo.
+ */
+.record {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.indice,
+.tiempo {
+    font-family: sans-serif;
+    font-size: 19px;
+    padding: 3px 0;
+}
+
+/* Enumeración correlativa del solve (ej: 1, 2, 3...) */
+.indice {
+    color: #7d7d7d;
+    font-weight: bold;
+}
+
+/**
+ * Cronómetro de resolución individual.
+ * - Color verde esmeralda para connotar éxito de cronometraje.
+ * - Hover reactivo que invita a interactuar para abrir detalles del modal.
+ */
+.tiempo {
+    color: #00b85c;
+    font-weight: 300;
+    transition: .15s ease;
+}
+
+.tiempo:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: white;
+}
+
+/* --------------------------------------------------------------------------
+   MICRO-CONTROLES DE MODIFICACIÓN (MINI BUTTONS)
+   -------------------------------------------------------------------------- */
+
+/**
+ * Bloque contenedor de herramientas de edición rápida por cada solve (Ej: +2, DNF, Borrar).
+ */
+.btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/**
+ * Botones compactos integrados en la fila.
+ */
+.mini_btn {
+    background-color: transparent;
+    border: none;
+    color: #6f6f6f;
+
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+
+    padding: 7px 9px;
+    transition: .15s ease;
+    user-select: none;
+    outline: none;
+}
+
+/* Resaltado del tercer botón de la serie (Generalmente asignado a la acción de eliminación o flag principal) */
+.mini_btn:nth-child(3) {
+    color: #f1f1f1;
+}
+
+.mini_btn:hover {
+    cursor: pointer;
+    color: white;
+}
+
+/* ==========================================================================
+   SECCIÓN: PANEL DE PROMEDIOS (ANALYTICS & AVERAGES GRID)
+   ========================================================================== */
+
+/**
+ * Contenedor del módulo analítico de estadísticas de promedios.
+ */
+.promedios {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 28px;
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid rgba(255, 255, 255, .05);
+
+    backdrop-filter: blur(12px);
+    user-select: none;
+    outline: none;
+}
+
+/**
+ * Red de distribución bidimensional para las tarjetas de promedios individuales.
+ * Define una estructura de matriz simétrica de 3 columnas por 3 filas al 30% cada una.
+ */
+.box_promedios {
+    display: grid;
+    grid-template-columns: repeat(3, 30%);
+    grid-template-rows: repeat(3, 30%);
+
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+    gap: 10px;
+}
+
+/**
+ * Tarjetas individuales de cálculo de promedios (Ej: Ao5, Ao12, Ao50, etc.).
+ * Implementa efectos de micro-flotación vertical en hover para enriquecer el feedback.
+ */
+.promedios_ao5 {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, .035);
+    border: 1px solid rgba(255, 255, 255, .05);
+
+    transition: .2s ease;
+}
+
+.promedios_ao5:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, .05);
+}
+
+/**
+ * Expansión geométrica para la quinta tarjeta (Promedio Principal o Global).
+ * Rompe la cuadrícula uniforme expandiéndose para ocupar 2 columnas y 2 filas (Bloque destacado).
+ */
+.promedios_ao5:nth-child(5) {
+    grid-column: 1 / 3;
+    grid-row: 2 / 4;
+}
+
+/**
+ * Elemento Select integrado para alternar el rango del promedio dentro de la tarjeta.
+ */
+.promedios_ao5 select {
+    margin: 8px 13px;
+    padding: 8px;
+
+    width: 80%;
+    border: none;
+    outline: none;
+
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+
+    color: #ddd;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.promedios_ao5 option {
+    background-color: #222;
+}
+
+/* --------------------------------------------------------------------------
+   DESPLIEGUE TEXTUAL DE LOS PROMEDIOS (METRIC INTERFACES)
+   -------------------------------------------------------------------------- */
+
+/**
+ * Texto indicador de tiempo calculado del promedio.
+ */
+.time_promedio {
+    display: flex;
+
+    margin: auto;
+    margin-bottom: 12px;
+
+    font-size: 24px;
+    font-family: sans-serif;
+    font-weight: 300;
+    color: #f5f5f5;
+}
+
+/**
+ * Sobreescritura dimensional para el texto del bloque destacado (quinta tarjeta).
+ * Maximiza drásticamente el tamaño de la tipografía para dar jerarquía visual al dato.
+ */
+.promedios_ao5:nth-child(5) .time_promedio {
+    margin-bottom: 40px;
+    font-size: 52px;
+}
+
+/* --------------------------------------------------------------------------
+   FLAGS DE VALIDACIÓN (ESTADOS DE RESOLUCIÓN DE SIFRAS)
+   -------------------------------------------------------------------------- */
+
+/* El valor es un tiempo válido y clickeable para auditoría */
+.valido:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* El valor está vacío o es inválido (Ej: "-"), cancela interacciones visuales */
+.invalido:hover {
+    cursor: default;
+    text-decoration: none;
+}
+
+/* ==========================================================================
+   SECCIÓN: SECCIÓN DE FECHAS / ENCABEZADOS DE SESIÓN (SESSION TIMELINE)
+   ========================================================================== */
+
+.dates {
+    display: flex;
+    padding: 10px;
+}
+
+.dates h2 {
+    padding: 5px;
+    margin: auto;
+    
+    color: #f1f1f1;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: sans-serif;
+    
+    cursor: pointer;
+    transition: .15s ease;
+}
+
+.dates h2:hover {
+    text-decoration: underline;
+}
