@@ -1,0 +1,787 @@
+/* ==========================================================================
+   SECCIÓN: CAPAS DE SUPERPOSICIÓN (OVERLAYS GLOBALES)
+   ========================================================================== */
+
+/**
+ * Contenedor de fondo oscuro para bloquear la interfaz principal.
+ * - Fija la posición en todo el viewport (`inset: 0`) bloqueando el scroll de fondo.
+ * - Aplica desenfoque de fondo y un z-index unificado de nivel 3 para forzar la
+ * prioridad visual por encima del Timer y el layout principal.
+ */
+.overlay_card {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+
+    z-index: 3; 
+}
+
+/* ==========================================================================
+   SECCIÓN: TARJETA MODAL PRINCIPAL (DATOS DEL SOLVE)
+   ========================================================================== */
+
+/**
+ * Ventana modal del historial o detalle de resolución.
+ * - Presentación premium mediante Glassmorphism y bordes suavizados (30px).
+ * - Layout vertical flexible con un ancho controlado para mantener la legibilidad.
+ */
+.card {
+    display: flex;
+    flex-direction: column;
+
+    width: 35%;
+    height: 92%;
+
+    margin: auto;
+    border-radius: 30px;
+
+    /* Configuración de cristal translúcido */
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(14px);
+
+    /* Profundidad y relieve interior */
+    box-shadow:
+        0 0 30px rgba(0, 0, 0, .5),
+        inset 0 0 20px rgba(255, 255, 255, .02);
+}
+
+/* --------------------------------------------------------------------------
+   BOTONES E INTERACCIONES SUPERIORES (CONTROLES DEL MODAL)
+   -------------------------------------------------------------------------- */
+
+/**
+ * Fila superior de utilidades del modal.
+ * Administra el espacio mediante posicionamiento relativo para permitir desvíos absolutos de sus hijos.
+ */
+.btns_card_top {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    width: 100%;
+    height: 11%;
+
+    position: relative;
+    padding: 10px 14px;
+}
+
+/**
+ * Botones de acción rápida superiores (Ej: Descartar, +2, DNF o guardar).
+ */
+.btn_card_start {
+    background: rgba(255, 255, 255, 0.05);
+    color: #cfcfcf;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    font-size: 16px;
+
+    padding: 6px 10px;
+    transition: .15s ease;
+}
+
+.btn_card_start:hover {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+}
+
+/* Ajuste posicional estricto para el primer botón (esquina izquierda) */
+.btn_card_start:first-child {
+    position: absolute;
+    left: 14px;
+}
+
+/* Espaciado del botón central */
+.btn_card_start:nth-child(2) {
+    margin-right: 20px;
+}
+
+/* Variante sin fondo para hover específico en botones terciarios */
+.btn_card_start:nth-child(3):hover {
+    background-color: transparent;
+}
+
+/**
+ * Botón de cierre nativo en forma de cruz ('X').
+ */
+.close_card {
+    background: transparent;
+    border: none;
+
+    color: #bdbdbd;
+    font-size: 22px;
+
+    cursor: pointer;
+    position: relative;
+    right: 15px;
+    bottom: 10px;
+
+    transition: .15s ease;
+}
+
+.close_card:hover {
+    color: white;
+    background-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   ÁREA DE CONTENIDO Y ACCIONES INFERIORES
+   -------------------------------------------------------------------------- */
+
+.options_card {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+/**
+ * Contenedor de botones de confirmación o cierre del pie del modal.
+ */
+.btn_card_bottom {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: auto;
+}
+
+.btn_card_end {
+    font-size: 16px;
+    padding: 6px 10px;
+
+    background: rgba(255, 255, 255, 0.05);
+    color: #d0d0d0;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    transition: .15s ease;
+    user-select: none;
+}
+
+.btn_card_end:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    cursor: pointer;
+}
+
+/* Deshabilitación de cursor interactivo para textos informativos simulados como botones */
+.btn_card_end:first-child {
+    cursor: default;
+}
+
+/* --------------------------------------------------------------------------
+   MÉTRICAS Y PRESENTACIÓN DE TIEMPOS
+   -------------------------------------------------------------------------- */
+
+/**
+ * Despliegue tipográfico de gran formato para el tiempo de resolución del cubo.
+ */
+.time_card {
+    font-size: 72px;
+    font-family: "Inter", sans-serif;
+
+    color: #f5f5f5;
+    text-align: center;
+    letter-spacing: -2px;
+}
+
+/**
+ * Sello de tiempo o fecha en formato monoespaciado para mantener alineación de caracteres.
+ */
+.date_card {
+    font-size: 14px;
+    font-family: monospace;
+
+    color: #bdbdbd;
+    text-align: center;
+    margin: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   VISTA DEL ESCRAMBLE (REPRESENTACIÓN 2D EN MODAL)
+   -------------------------------------------------------------------------- */
+
+.scramble_card {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.cubo_card {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+}
+
+.cubo_card .mini_cubo {
+    margin: auto;
+}
+
+/**
+ * Caja de texto para la cadena de texto algorítmica (Scramble) oficial de la WCA.
+ */
+.combination_card {
+    width: 80%;
+    margin: 20px auto 0 auto;
+
+    text-align: center;
+    font-family: monospace;
+    font-size: 18px;
+    color: #dcdcdc;
+}
+
+/* ==========================================================================
+   SECCIÓN: PANEL DE ESTADÍSTICAS GLOBAL (MODAL DE PROMEDIOS)
+   ========================================================================== */
+
+/**
+ * Tarjeta de analíticas unificada visualmente con la estética oscura de la app.
+ */
+.card_stats {
+    display: flex;
+    flex-direction: column;
+
+    width: 35%;
+    height: 90%;
+
+    margin: auto;
+    padding: 0 25px;
+
+    position: relative;
+    border-radius: 30px;
+
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(14px);
+
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+}
+
+.text_card {
+    margin-top: 60px;
+    padding-bottom: 7px;
+}
+
+.avgtext_card,
+.avg_stats,
+.actual_stats {
+    font-family: sans-serif;
+    font-size: 28px;
+    color: #f1f1f1;
+}
+
+/**
+ * Resaltado verde neon de éxito/mejora para los mejores promedios (Average of 5/12).
+ */
+.avg_stats {
+    color: #9effa1;
+}
+
+.date_stats {
+    font-family: monospace;
+    font-size: 16px;
+    color: #bdbdbd;
+}
+
+/* --------------------------------------------------------------------------
+   COMPONENTE: LISTA DE SOLVES CON SCROLL (TABLA DE RACHAS)
+   -------------------------------------------------------------------------- */
+
+/**
+ * Zona interna con desbordamiento vertical habilitado para listar las resoluciones.
+ */
+.list_stats {
+    margin-top: 35px;
+    height: 55%;
+    overflow-y: auto;
+}
+
+/* Personalización avanzada de la barra de desplazamiento (Estilo Webkit futurista) */
+.list_stats::-webkit-scrollbar {
+    width: 7px;
+}
+
+.list_stats::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.list_stats::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+}
+
+.list_stats::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/**
+ * Fila individual que representa una resolución histórica en la lista.
+ */
+.solve_stats {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.index_stats,
+.time_stats {
+    font-family: sans-serif;
+    font-size: 18px;
+}
+
+/* Número de la resolución (ej: #01) con preservación de espacios en blanco */
+.index_stats {
+    color: #a0a0a0;
+    white-space: pre;
+}
+
+.text_list {
+    display: flex;
+    margin: auto 0;
+}
+
+/**
+ * Enlace/botón interno para reabrir o examinar el gráfico/scramble de un solve específico.
+ */
+.view_solve {
+    width: 110px;
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #dcdcdc;
+    text-decoration: underline;
+}
+
+/**
+ * Botón de salida absoluto para el panel de estadísticas.
+ */
+.close_stats {
+    position: absolute;
+    right: 5px;
+    height: 40px;
+    padding: 20px;
+
+    background-color: transparent;
+    border: none;
+    border-radius: 10px;
+
+    color: #bdbdbd;
+    font-size: 25px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.close_stats:hover {
+    color: #eaeaea;
+}
+
+/**
+ * Badge o etiqueta indicadora de la categoría de cubo actual (Ej: 3x3, 2x2, OH).
+ */
+.typecube_stats {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    width: 60px;
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   SECCIÓN: MODAL DE CONFIGURACIÓN (PREFERENCES OVERLAY)
+   ========================================================================== */
+
+.config-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    z-index: 3; 
+}
+
+/**
+ * Tarjeta de configuraciones con una opacidad de fondo más sólida (0.85) 
+ * para garantizar la legibilidad de controles críticos e inputs.
+ * Deshabilita la selección de texto por UI (`user-select: none`).
+ */
+.config-card {
+    display: flex;
+    flex-direction: column;
+
+    width: 40%;
+    height: 40%;
+
+    margin: auto;
+    padding: 30px 25px;
+
+    position: relative;
+    border-radius: 30px;
+
+    background: rgba(10, 10, 10, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 0 30px rgba(0, 0, 0, .6),
+        inset 0 0 20px rgba(255, 255, 255, .02);
+
+    overflow: hidden;
+    user-select: none;
+    outline: none;
+}
+
+.config-title {
+    font-family: sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #f1f1f1;
+    margin-bottom: 15px;
+    
+    /* Evita que el título se encoja si el contenido interno crece */
+    flex-shrink: 0;
+}
+
+.config-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 40px;
+    height: 40px;
+
+    background: transparent;
+    border: none;
+    color: #bdbdbd;
+    font-size: 26px;
+
+    cursor: pointer;
+    transition: .15s ease;
+}
+
+.config-close:hover {
+    color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   MANEJO DE SCROLL INTERNO EN CONFIGURACIÓN
+   ========================================================================== */
+
+.config-card {
+    overflow: hidden;
+}
+
+/**
+ * Contenedor con scroll propio para alojar las filas de configuración sin deformar el modal.
+ */
+.config-card .config-scroll {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+/* Scrollbar personalizado de las opciones */
+.config-card .config-scroll::-webkit-scrollbar {
+    width: 7px;
+}
+
+.config-card .config-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+}
+
+.config-card .config-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Fila estándar de ítem de configuración */
+.config-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.config-text {
+    font-family: sans-serif;
+    font-size: 15px;
+    color: #cfcfcf;
+}
+
+/* --------------------------------------------------------------------------
+   COMPONENTE INTERACTIVO: SWITCH DE ALTERNANCIA (TOGGLE SLIDER)
+   -------------------------------------------------------------------------- */
+
+/**
+ * Contenedor base del switch de configuración.
+ */
+.config-switch {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 22px;
+}
+
+/**
+ * Oculta el checkbox HTML por defecto de manera invisible pero accesible para eventos de JS.
+ */
+.config-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/**
+ * Cuerpo o pista del deslizador (Slider track) en estado inactivo.
+ */
+.config-slider {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    transition: .2s ease;
+}
+
+/**
+ * Perilla o indicador circular interno del switch.
+ * Centrado verticalmente mediante transformaciones CSS.
+ */
+.config-slider::before {
+    content: "";
+    position: absolute;
+
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    background-color: #bdbdbd;
+    border-radius: 50%;
+    transition: .2s ease;
+}
+
+/**
+ * Comportamiento cuando el checkbox está activo (checked):
+ * Cambia el fondo del slider a un tono esmeralda translúcido y desplaza la perilla.
+ */
+.config-switch input:checked + .config-slider {
+    background-color: rgba(0, 184, 92, 0.25);
+    border-color: rgba(0, 184, 92, 0.5);
+}
+
+.config-switch input:checked + .config-slider::before {
+    transform: translate(20px, -50%);
+    background-color: #00b85c;
+}
+
+/* --------------------------------------------------------------------------
+   BOTÓN ESPECIAL DE REPORTES O ALERTAS CRÍTICAS
+   -------------------------------------------------------------------------- */
+
+.config-report-btn {
+    background: #fd3127;
+    color: #fff;
+
+    border: none;
+    border-radius: 10px;
+    padding: 8px 13px;
+
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.config-report-btn:hover {
+    background: #e02d24;
+    transform: translateY(-2px); /* Efecto leve de flotación */
+}
+
+.config-report-btn:active {
+    transform: translateY(0); /* Simulación física de pulsación al hacer click */
+}
+
+/* ==========================================================================
+   SECCIÓN: MODAL DE DONACIONES (DONATE COMPONENT)
+   ========================================================================== */
+
+/**
+ * Modal extendido de soporte al proyecto con ancho fijo.
+ * Utiliza un degradado lineal oscuro opaco continuo de arriba hacia abajo para dar sobriedad.
+ */
+.donate-card {
+    width: 750px;
+    height: 90%;
+
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+
+    border-radius: 32px;
+    background: linear-gradient(180deg, rgba(20, 20, 20, .96), rgba(10, 10, 10, .96));
+
+    border: 1px solid rgba(255, 255, 255, .06);
+
+    box-shadow:
+        0 0 40px rgba(0, 0, 0, .6),
+        inset 0 0 20px rgba(255, 255, 255, .02);
+
+    overflow: hidden;
+    user-select: none;
+    outline: none;
+}
+
+/* --------------------------------------------------------------------------
+   ELEMENTOS DE ENCABEZADO Y BRANDING
+   -------------------------------------------------------------------------- */
+
+/**
+ * Banner superior decorativo o promocional.
+ * - Flex-shrink en 0 asegura que la imagen conserve sus proporciones y alto estricto.
+ */
+.banner {
+    width: 100%;
+    height: 120px;
+    flex-shrink: 0;
+
+    background: url("../Images/banner.png") center center no-repeat;
+    background-size: contain;
+    border-bottom: 1px solid rgba(255, 255, 255, .06);
+}
+
+/**
+ * Título tipográfico estilizado con la fuente temática de velocidad/gaming 'Oxanium'.
+ */
+.donate-title {
+    margin: 25px auto 15px;
+    color: white;
+
+    font-family: 'Oxanium', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.text_donate {
+    width: 85%;
+    margin: 0 auto;
+
+    text-align: center;
+    line-height: 1.8; /* Generoso interlineado para lectura fluida */
+
+    color: #c8c8c8;
+    font-size: 15px;
+    font-family: sans-serif;
+}
+
+/**
+ * Subtexto monótono (contador secundario de patrocinadores o metas).
+ */
+.donate_counter {
+    text-align: center;
+    margin-top: 15px;
+
+    color: #8f8f8f;
+    font-size: 13px;
+
+    font-family: 'Oxanium', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   MÓDULO DE PASARELAS Y CÓDIGOS QR
+   -------------------------------------------------------------------------- */
+
+/**
+ * Caja contenedora flexible de métodos de pago. Distribuye los métodos equitativamente.
+ */
+.qr_container {
+    flex: 1; /* Absorbe todo el espacio vertical restante del modal */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 50px;
+    padding: 20px 30px 40px;
+}
+
+/**
+ * Agrupador vertical de QR e indicador textual del método.
+ */
+.donate_method {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.donate_method span {
+    color: #d0d0d0;
+    font-size: 14px;
+    font-family: 'Oxanium', sans-serif;
+    letter-spacing: .5px;
+}
+
+/**
+ * Estilos base compartidos por las tarjetas de imagen QR (Nacional e Internacional).
+ * - Transiciones suaves preparadas para el escalado del hover.
+ */
+.qr_national,
+.qr_international {
+    width: 180px;
+    height: 180px;
+
+    border-radius: 24px;
+    background-size: cover;
+    background-position: center 1%;
+
+    border: 1px solid rgba(255, 255, 255, .08);
+
+    box-shadow:
+        0 0 20px rgba(0, 0, 0, .5),
+        inset 0 0 15px rgba(255, 255, 255, .03);
+
+    transition: .25s ease;
+}
+
+/* Carga del QR Local/Nacional */
+.qr_national {
+    background-image: url("../Images/breb.jpeg");
+}
+
+/* Carga del QR Global/Paypal */
+.qr_international {
+    background-image: url("../Images/paypal.jpeg");
+}
+
+/**
+ * Animación reactiva al Hover sobre las tarjetas QR:
+ * - Eleva la tarjeta verticalmente mediante traslación.
+ * - Intensifica el brillo del borde y proyecta una sombra de resplandor blanco sutil.
+ */
+.qr_national:hover,
+.qr_international:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, .18);
+
+    box-shadow:
+        0 0 35px rgba(255, 255, 255, .08),
+        0 0 25px rgba(0, 0, 0, .6);
+}

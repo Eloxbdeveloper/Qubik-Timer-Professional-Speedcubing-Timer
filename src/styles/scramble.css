@@ -1,0 +1,72 @@
+/* ==========================================================================
+   SECCIÓN: COMPONENTE GENERADOR DE MEZCLAS (SCRAMBLE COMPONENT)
+   ========================================================================== */
+
+/**
+ * Contenedor maestro del menú del Scramble.
+ * - Ubica de manera flotante el bloque del algoritmo de mezcla en el layout principal.
+ * - Utiliza propiedades de posicionamiento relativo con offsets rígidos (`right`/`bottom`) 
+ * para alinearse simétricamente respecto a la interfaz del cronómetro.
+ */
+.scramble-menu {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+
+    position: relative;
+    right: 170px;
+    bottom: 90px;
+    
+    width: 45%;
+    height: 39%;
+}
+
+/**
+ * Visualizador de la notación oficial del algoritmo de mezcla (WCA Scramble).
+ * - Hereda propiedades de un `textarea` pero resetea el comportamiento nativo del navegador (sin bordes ni redimensión).
+ * - Tipografía monoespaciada (`monospace`) para asegurar que todos los caracteres tengan el mismo ancho, 
+ * optimizando la lectura de giros y modificadores (ej: R2, U', F2).
+ * - `white-space: pre-wrap` y `overflow-wrap: break-word`: Previenen que algoritmos largos de categorías 
+ * complejas (como 4x4 o megaminx) rompan el layout, forzando un salto de línea limpio al llegar al límite del contenedor.
+ */
+.notacion {
+    user-select: none;
+
+    width: 575px;
+    min-height: 24%;
+
+    border: none;
+    outline: none;
+    
+    /* Deshabilita el redimensionado manual por el usuario en la esquina inferior */
+    resize: none; 
+
+    background-color: transparent;
+
+    font-size: 24px;
+    font-family: monospace;
+    font-weight: 600;
+    letter-spacing: 1px;
+
+    color: #cfcfcf;
+
+    /* Gestión y control estricto de textos largos */
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    overflow-y: hidden; /* Oculta barras de scroll internas innecesarias */
+    
+    text-align: center;
+    margin: auto;
+
+    opacity: .9;
+}
+
+/**
+ * Marco de contención periférico para el área de texto.
+ * Actúa como un contenedor visual estético de bordes suavizados para aislar la mezcla del fondo.
+ */
+.borde_textarea {
+    border: 1px solid #cfcfcf;
+    padding: 10px;
+    border-radius: 10px;
+}
