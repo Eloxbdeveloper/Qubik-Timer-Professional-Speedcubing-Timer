@@ -86,3 +86,5 @@ Developed by **Eloxb Developer**:
 
 ---
 <p align="center">Designed as a technical tool for competitive training and performance analysis in Speedcubing.</p>
+
+pruebaaaa
