@@ -111,5 +111,5 @@ facebook[0].addEventListener("click", () => {
 
 // Redirección segura al repositorio de código fuente del ecosistema en GitHub
 github[0].addEventListener("click", () => {
-    window.open("https://github.com/Eloxbdeveloper/Qubik-Timer-Professional-Speedcubing", "_blank");
+    window.open("https://github.com/Eloxbdeveloper/Qubik-Timer-Professional-Speedcubing-Timer", "_blank");
 });
