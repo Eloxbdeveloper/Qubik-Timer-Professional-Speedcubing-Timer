@@ -10,7 +10,7 @@
  * - Arquitectura de capas: Asignado a un z-index base de 1 para actuar como el fondo del layout fijo, 
  * asegurando que los modales (z-index: 3) abran por encima de este panel sin conflicto.
  */
-.nav_bar {
+.navbar {
     position: fixed;
     left: 0;
     top: 0;
@@ -24,27 +24,22 @@
 
     padding: 13px 8px;
 
-    background: linear-gradient(
-        180deg,
-        #1e1e1e 0%,
-        #151515 50%,
-        #101010 100%
-    );
+    background: linear-gradient(180deg, #1e1e1e 0%, #151515 50%, #101010 100%);
 
-    border-right: 1px solid rgba(255, 255, 255, .05);
-    box-shadow: 5px 0 20px rgba(0, 0, 0, .35);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.35);
 
-    z-index: 1; 
+    z-index: 1;
 
     /* Transición fluida para el efecto de despliegue */
-    transition: width .25s ease;
+    transition: width 0.25s ease;
 }
 
 /**
  * Estado Expandido del Navbar:
  * Al posicionar el cursor, la barra incrementa su ancho al 15% revelando el menú completo.
  */
-.nav_bar:hover {
+.navbar:hover {
     width: 15%;
 }
 
@@ -57,7 +52,7 @@
  * - Conserva sus dimensiones proporcionales (background-size: contain).
  * - Utiliza márgenes basados en vh (viewport height) para aislarse en la zona superior.
  */
-.logo {
+.navbar__logo {
     width: 95%;
     height: 10%;
 
@@ -68,13 +63,13 @@
     background: url("../Images/logo.png") center no-repeat;
     background-size: contain;
 
-    transition: transform .25s ease;
+    transition: transform 0.25s ease;
 }
 
 /**
  * Escalado dinámico del logo cuando la barra de navegación se expande.
  */
-.nav_bar:hover .logo {
+.navbar:hover .navbar__logo {
     transform: scale(2.2);
 }
 
@@ -87,7 +82,7 @@
  * - Calcula el ancho de manera dinámica restando paddings laterales (calc).
  * - Define un alto mínimo para asegurar un área de clic óptima y accesible.
  */
-.logos_container {
+.navbar__item {
     display: flex;
     align-items: center;
 
@@ -95,19 +90,19 @@
     min-height: 52px;
 
     margin: 4px 0;
-    padding: 0 12px;
+    padding: 0 12px 0 0;
 
     border-radius: 16px;
-    transition: .18s ease;
+    transition: 0.18s ease;
 }
 
 /**
  * Comportamiento de enfoque en los ítems:
  * Añade un fondo sutil translúcido y un leve desplazamiento vertical hacia arriba.
  */
-.logos_container:hover {
+.navbar__item:hover {
     cursor: pointer;
-    background: rgba(255, 255, 255, .05);
+    background: rgba(255, 255, 255, 0.05);
     transform: translateY(-2px);
 }
 
@@ -115,8 +110,15 @@
  * Separador posicional para las opciones inferiores (Ej: Ajustes, Donaciones).
  * Empuja de forma elástica las últimas opciones hacia abajo usando un margen superior alto basado en vh.
  */
-.logos_container:nth-last-child(2) {
+.navbar__item:nth-last-child(2) {
     margin-top: 12vh;
+}
+
+.navbar__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
 }
 
 /* --------------------------------------------------------------------------
@@ -127,14 +129,14 @@
  * Estilos compartidos por los íconos de la suite Ionicons.
  * - Asegura un ancho mínimo fijo para que no se deformen ni pierdan su eje en el colapso.
  */
-.logos_container ion-icon {
+.navbar__item ion-icon {
     min-width: 24px;
     font-size: 24px;
     color: #a5a5a5;
-    transition: .18s ease;
+    transition: 0.18s ease;
 }
 
-.logos_container:hover ion-icon {
+.navbar__item:hover ion-icon {
     color: #ffffff;
 }
 
@@ -143,7 +145,7 @@
  * - Limpia los valores nativos de herencia de botones e inputs.
  * - Deshabilita la selección de texto para evitar distorsiones en clics repetitivos.
  */
-.logos_container .material-symbols-outlined {
+.navbar__item .material-symbols-outlined {
     background: transparent;
     border: none;
     outline: none;
@@ -155,12 +157,32 @@
     color: #a5a5a5;
 
     cursor: pointer;
-    transition: .18s ease;
+    transition: 0.18s ease;
     user-select: none;
 }
 
-.logos_container:hover .material-symbols-outlined {
+.navbar__item:hover .material-symbols-outlined {
     color: #ffffff;
+}
+
+.navbar__link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    padding-left: 12px;
+}
+
+.navbar__button {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
+    padding-left: 12px;
+    cursor: pointer;
 }
 
 /* --------------------------------------------------------------------------
@@ -172,18 +194,15 @@
  * - Estado Base: Completamente oculto (`opacity: 0` y `visibility: hidden`) 
  * e interrupción del salto de línea (`white-space: nowrap`) para evitar que se renderice colapsado.
  */
-.label {
+.navbar__label {
     margin-left: 16px;
     color: #d8d8d8;
-
     font-size: 14px;
     font-weight: 500;
     white-space: nowrap;
-
     opacity: 0;
     visibility: hidden;
-
-    transition: .18s ease;
+    transition: 0.18s ease;
     user-select: none;
     cursor: pointer;
 }
@@ -192,7 +211,7 @@
  * Disparador de visibilidad sincrónico:
  * Muestra el texto de todos los ítems únicamente cuando la barra de navegación es enfocada por el usuario.
  */
-.nav_bar:hover .label {
+.navbar:hover .navbar__label {
     opacity: 1;
     visibility: visible;
 }
@@ -200,7 +219,7 @@
 /**
  * Resaltado tipográfico individual al pasar el cursor sobre la opción activa.
  */
-.logos_container:hover .label {
+.navbar__item:hover .navbar__label {
     color: white;
 }
 
@@ -232,19 +251,22 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    
-    min-width: 110px; 
+
+    min-width: 110px;
     height: 30px;
-    padding: 5px 30px 5px 15px; 
+    padding: 5px 30px 5px 15px;
 
     border-radius: 14px;
 
     /* Background dual: Imagen SVG + Color sólido de fondo */
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23eaeaea' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat, #212121;
-    
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23eaeaea' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+            no-repeat,
+        #212121;
+
     /* Centrado e indentación de la flecha SVG en el borde derecho */
-    background-position: calc(100% - 12px) 50%; 
-    
+    background-position: calc(100% - 12px) 50%;
+
     border: 1px solid rgba(255, 255, 255, 0.08);
     color: #eaeaea;
 
@@ -253,7 +275,7 @@
     font-weight: 500;
 
     cursor: pointer;
-    transition: .2s ease;
+    transition: 0.2s ease;
     outline: none;
 }
 
@@ -281,7 +303,7 @@
     font-family: "Oxanium", sans-serif;
     font-size: 13px;
     font-weight: 500;
-    padding: 8px 10px; 
+    padding: 8px 10px;
 }
 
 /**
