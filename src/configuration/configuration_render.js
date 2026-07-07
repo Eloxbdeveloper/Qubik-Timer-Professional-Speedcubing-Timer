@@ -1,10 +1,10 @@
 import { contenedor } from "../database/DB_render.js";
 import { db } from "../database/init_DB.js";
-import { cronometro, refreshManualState  } from "../scrambler/timer.js";
+import { cronometro, refreshManualState } from "../scrambler/timer.js";
 
 // Referencias a los contenedores interactivos globales del DOM para alternar interfaces
 const manually_times = document.querySelector(".manually_times");
-const label_settings = document.querySelector(".label_settings");
+const settingsButton = document.querySelector(".js-open-settings-modal");
 
 /**
  * Genera de manera dinámica el panel de configuración (Overlay) inyectando elementos en el DOM.
@@ -12,7 +12,6 @@ const label_settings = document.querySelector(".label_settings");
  * y gestiona los cambios de estado visual y lógico del temporizador.
  */
 export function createConfigOverlay() {
-
     // Capa de fondo oscura translúcida que aísla la vista de configuración
     const overlay = document.createElement("div");
     overlay.classList.add("config-overlay");
@@ -37,25 +36,24 @@ export function createConfigOverlay() {
     const items = [
         {
             text: "Use the inspection (15 seconds)",
-            configuration: "inspeccion"
+            configuration: "inspeccion",
         },
         {
             text: "The time is not displayed during the solution.",
-            configuration: "ocultarTiempo"
+            configuration: "ocultarTiempo",
         },
         {
             text: "Enter the times manually (for stackmat)",
-            configuration: "ingresoManual"
+            configuration: "ingresoManual",
         },
         {
             text: "Report errors or inconsistencies",
-            configuration: "reportarErrores"
-        }
+            configuration: "reportarErrores",
+        },
     ];
 
     // Iteración de elementos para construir la interfaz reactiva
-    items.forEach(itemData => {
-
+    items.forEach((itemData) => {
         const item = document.createElement("div");
         item.classList.add("config-item");
 
@@ -67,7 +65,6 @@ export function createConfigOverlay() {
 
         // CASO ESPECIAL: Manejo diferenciado para el botón de reporte externo
         if (itemData.configuration === "reportarErrores") {
-
             const reportBtn = document.createElement("button");
             reportBtn.textContent = "REPORT";
             reportBtn.classList.add("config-report-btn");
@@ -79,7 +76,6 @@ export function createConfigOverlay() {
             });
 
             item.appendChild(reportBtn);
-
         } else {
             // CONSTRUCCIÓN DE INTERRUPTORES (SWITCHES) PARA PARÁMETROS BOOLEANOS:
             const label = document.createElement("label");
@@ -103,12 +99,11 @@ export function createConfigOverlay() {
             const req_read = store_read.getAll();
 
             req_read.onsuccess = () => {
-
                 const datos = req_read.result;
 
                 // Busca la coincidencia exacta de configuración en el almacén local
                 const config = datos.find(
-                    item => item.configuration === itemData.configuration
+                    (item) => item.configuration === itemData.configuration,
                 );
 
                 if (!config) return;
@@ -131,17 +126,15 @@ export function createConfigOverlay() {
             // CAPTURA DE EVENTO DE CAMBIO (MUTACIÓN ATÓMICA):
             // Escucha las interacciones del usuario y actualiza en caliente los registros en IndexedDB
             input.addEventListener("change", () => {
-
                 const tx = db.transaction("configDB", "readwrite");
                 const store = tx.objectStore("configDB");
                 const req = store.getAll();
 
                 req.onsuccess = async () => {
-
                     const datos = req.result;
 
                     const config = datos.find(
-                        item => item.configuration === itemData.configuration
+                        (item) => item.configuration === itemData.configuration,
                     );
 
                     if (!config) return;
@@ -165,7 +158,6 @@ export function createConfigOverlay() {
 
                     // Notifica asíncronamente al motor central del timer para reconfigurar los listeners del teclado
                     await refreshManualState();
-
                 };
             });
         }
@@ -183,25 +175,23 @@ export function createConfigOverlay() {
 }
 
 // Vincula el inicializador del panel al evento clic del elemento visual correspondiente en la UI
-label_settings.addEventListener("click", createConfigOverlay);
+settingsButton.addEventListener("click", createConfigOverlay);
 
 /**
  * Verificación de consistencia del estado de entrada manual.
- * Consulta de forma aislada la base de datos durante la carga de la aplicación para asegurar 
+ * Consulta de forma aislada la base de datos durante la carga de la aplicación para asegurar
  * que la interfaz se acople correctamente a las preferencias guardadas en sesiones previas.
  */
 export function checkManualInput() {
-
     const tx = db.transaction("configDB", "readonly");
     const store = tx.objectStore("configDB");
     const req = store.getAll();
 
     req.onsuccess = () => {
-
         const datos = req.result;
 
         const config = datos.find(
-            item => item.configuration === "ingresoManual"
+            (item) => item.configuration === "ingresoManual",
         );
 
         if (!config) return;
