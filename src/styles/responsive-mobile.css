@@ -23,7 +23,6 @@
    Compacta el layout desktop sin reestructurar. Mantiene sidebar visible.
    ========================================================================== */
 @media screen and (max-width: 1024px) {
-
     /* ----------------------------------------------------------------------
        0. DESBLOQUEO DE LA INTERFAZ (anula el bloqueo mobile de 1000px)
        ---------------------------------------------------------------------- */
@@ -73,7 +72,9 @@
         height: 2px;
         background: #d0d0d0;
         border-radius: 2px;
-        transition: transform 0.25s ease, opacity 0.25s ease;
+        transition:
+            transform 0.25s ease,
+            opacity 0.25s ease;
     }
 
     .contenedor.nav-open .hamburger-btn span:nth-child(1) {
@@ -148,7 +149,7 @@
 
     /* Overlay oscuro detras del sidebar */
     .contenedor.nav-open::after {
-        content: '';
+        content: "";
         position: fixed;
         inset: 0;
         background: rgba(0, 0, 0, 0.6);
@@ -168,12 +169,16 @@
 
     .select_categoria,
     .select_sesiones {
-        min-width: 85px;
+        min-width: 0;
+        width: auto;
+        max-width: 140px;
         height: 28px;
         padding: 4px 24px 4px 10px;
         font-size: 11px;
         border-radius: 12px;
         background-position: calc(100% - 10px) 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     /* ----------------------------------------------------------------------
@@ -447,7 +452,6 @@
         margin: 14px 8px;
         margin-bottom: 8px;
     }
-
 }
 
 /* ==========================================================================
@@ -455,7 +459,6 @@
    Reestructuracion completa: flex column, off-canvas sidebar, bottom sheets.
    ========================================================================== */
 @media screen and (max-width: 520px) {
-
     /* ----------------------------------------------------------------------
        0. ROOT — FLEX COLUMN, SCROLL HABILITADO
        ---------------------------------------------------------------------- */
@@ -497,16 +500,21 @@
         margin-left: 0;
         width: 100%;
         flex-shrink: 0;
+        box-sizing: border-box;
+        overflow: hidden;
     }
 
     .select_categoria,
     .select_sesiones {
-        flex: 1;
+        flex: 1 1 0;
         max-width: 155px;
         min-width: 0;
+        width: 0;
         height: 32px;
         font-size: 12px;
         padding: 5px 28px 5px 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     /* ----------------------------------------------------------------------
@@ -574,17 +582,17 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        width: 100%;           /* antes: auto */
-        gap: 12px;              /* espacio entre cubo y stats */
+        width: 100%; /* antes: auto */
+        gap: 12px; /* espacio entre cubo y stats */
         flex-shrink: 0;
         box-sizing: border-box;
-        padding: 0 16px;         /* espacio lateral del contenedor */
+        padding: 0 16px; /* espacio lateral del contenedor */
     }
 
     .cube-stats-row .cubo {
-        flex: 1 1 0;            /* reparto igualitario, ignora width fijo */
+        flex: 1 1 0; /* reparto igualitario, ignora width fijo */
         max-width: 50%;
-        min-width: 0;           /* evita overflow por el transform:scale */
+        min-width: 0; /* evita overflow por el transform:scale */
         background-color: 0;
         transform: scale(0.5);
         transform-origin: center;
@@ -597,21 +605,20 @@
         backdrop-filter: none !important;
         border: none !important;
         box-shadow: none !important;
-        }
-
+    }
 
     .cube-stats-row .stats-inline {
-        flex: 1 1 0;            /* mismo reparto que .cubo */
+        flex: 1 1 0; /* mismo reparto que .cubo */
         max-width: 50%;
         min-width: 0;
         box-sizing: border-box;
-        padding: 8px 20px;       /* espacio interno de las stats */
+        padding: 8px 20px; /* espacio interno de las stats */
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 6px;               /* un poco más de aire entre filas de stats */
-        }
+        gap: 6px; /* un poco más de aire entre filas de stats */
+    }
 
     .quick-stat {
         display: flex;
@@ -628,12 +635,12 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
         color: #8f8f8f;
-        font-family: 'Oxanium', sans-serif;
+        font-family: "Oxanium", sans-serif;
         flex-shrink: 0;
     }
 
     .quick-stat-value {
-        font-family: 'Oxanium', sans-serif;
+        font-family: "Oxanium", sans-serif;
         font-size: clamp(13px, 3.8vw, 20px);
         font-weight: 600;
         color: #f5f5f5;
@@ -649,7 +656,7 @@
         position: fixed !important;
         bottom: 0;
         left: 0;
-        width: 100% !important; 
+        width: 100% !important;
         height: 55vh;
         z-index: 40;
         transform: translateY(calc(100% - 48px));
@@ -664,13 +671,13 @@
     }
 
     .fila_front::before {
-        content: '';
+        content: "";
         display: block;
         width: 8em;
         height: 4px;
         background: rgba(255, 255, 255, 0.3);
         border-radius: 2px;
-        align-self: center; 
+        align-self: center;
         margin: 12px 0 8px 0;
         flex-shrink: 0;
     }
@@ -729,13 +736,13 @@
 
     /* Handle visual del sheet B */
     .promedios.expanded::before {
-        content: '';
+        content: "";
         display: block;
         width: 40px;
         height: 4px;
         background: rgba(255, 255, 255, 0.28);
         border-radius: 2px;
-        align-self: center; 
+        align-self: center;
         margin: 8px auto;
         flex-shrink: 0;
     }
@@ -750,7 +757,7 @@
         width: 100%;
     }
 
-    .promedios.expanded .promedios_ao5:nth-child(n+3) {
+    .promedios.expanded .promedios_ao5:nth-child(n + 3) {
         display: flex;
     }
 
@@ -887,13 +894,55 @@
     }
 
     /* ----------------------------------------------------------------------
-       7. SAFE AREA (notch / home indicator)
-       ---------------------------------------------------------------------- */
+        7. SAFE AREA (notch / home indicator)
+        ---------------------------------------------------------------------- */
 
     .fila_front,
     .promedios.expanded {
         padding-bottom: env(safe-area-inset-bottom, 0px);
     }
-
 }
 
+/* ==========================================================================
+   SECCION: RESOLUCIONES MUY BAJAS (400px)
+   Evita que el hamburger y los selects se solapen en pantallas pequeñas.
+   ========================================================================== */
+@media screen and (max-width: 450px) {
+    .hamburger-btn {
+        width: 34px;
+        height: 34px;
+        top: 10px;
+        left: 6px;
+    }
+
+    .hamburger-btn span {
+        width: 18px;
+    }
+
+    .contenedor.nav-open .hamburger-btn span:nth-child(1) {
+        transform: rotate(45deg) translate(4px, 4px);
+    }
+
+    .contenedor.nav-open .hamburger-btn span:nth-child(3) {
+        transform: rotate(-45deg) translate(4px, -4px);
+    }
+
+    .selects_category {
+        gap: 5px;
+        padding: 14px 10px 6px 54px;
+    }
+
+    .select_categoria,
+    .select_sesiones {
+        flex: 1 1 0;
+        max-width: none;
+        font-size: 10px;
+        height: 26px;
+        padding: 3px 18px 3px 6px;
+        min-width: 0;
+        width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        background-position: calc(100% - 6px) 50%;
+    }
+}
