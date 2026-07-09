@@ -115,7 +115,7 @@ window.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", () => {
         if (promedios?.classList.contains("expanded")) {
             promedios.classList.remove("expanded");
-            filaFront?.appendChild(promedios); // Lo devolvemos a su contenedor original
+            filaFront?.appendChild(promedios);
         }
     });
 

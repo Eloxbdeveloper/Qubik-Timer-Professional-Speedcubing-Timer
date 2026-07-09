@@ -399,15 +399,29 @@ export function eventosTimer() {
         );
     }
 
+    function sheetIsOpen() {
+        return !!(
+            document.querySelector(".fila_front.open") ||
+            document.querySelector(".promedios.expanded")
+        );
+    }
+
     touchZone.addEventListener("touchstart", (e) => {
-        if (isEditable || manualState || isInteractive(e.target) || bloqueoInicio)
+        if (
+            isEditable ||
+            manualState ||
+            isInteractive(e.target) ||
+            bloqueoInicio ||
+            sheetIsOpen()
+        )
             return;
         e.preventDefault();
         handlePress(e);
     });
 
     touchZone.addEventListener("touchend", (e) => {
-        if (isEditable || manualState || isInteractive(e.target)) return;
+        if (isEditable || manualState || isInteractive(e.target) || sheetIsOpen())
+            return;
         e.preventDefault();
         handleRelease();
     });
