@@ -155,8 +155,74 @@ export function eventosTimer() {
     );
 
     /* -------------------------------------------------------
-      MANEJO DEL KEYDOWN (Captura de presiones / Detención e Inspección)
-  ------------------------------------------------------- */
+      MANEJO DEL KEYDOWN (Captura de presiones / Detencion e Inspeccion)
+    ------------------------------------------------------- */
+
+    // Funcion compartida: logica de presion (teclado Space + touch)
+    function handlePress(e) {
+        if (e && e.preventDefault) e.preventDefault();
+
+        // CASO 1: El cronometro esta corriendo -> SE DETIENE EL SOLVE DE FORMA INMEDIATA Y SE ARCHIVA
+        if (corriendo) {
+            clearInterval(intervalo);
+            corriendo = false;
+            presionado = false;
+
+            const rawTime = (new Date() - inicio) / 1000;
+            cronometro.textContent = rawTime.toFixed(2);
+            inicio = null;
+
+            if (ocultar_elementos)
+                ocultar_elementos.classList.remove("activo");
+
+            const data = arrayInfo();
+            if (data) añadir(data);
+
+            resetPenalties();
+            menuScramble[0].click();
+
+            bloqueoInicio = true;
+            setTimeout(() => {
+                bloqueoInicio = false;
+            }, 950);
+            return;
+        }
+
+        // CASO 2: Cuenta regresiva de Inspeccion en progreso -> El usuario presiona espacio preparandose para salir
+        if (enInspeccion && !preparandoDesdeInspeccion) {
+            preparandoDesdeInspeccion = true;
+            cronometro.style.color = "green";
+            return;
+        }
+
+        // CASO 3: Estado estacionario en reposo -> Preparando el arranque directo
+        if (!enInspeccion && !corriendo && !presionado && !bloqueoInicio) {
+            presionado = true;
+            presionInicio = Date.now();
+            isArmed = true;
+
+            cronometro.style.color = "red";
+            if (ocultar_elementos)
+                ocultar_elementos.classList.add("activo");
+
+            const verificar = setInterval(() => {
+                const duracion = Date.now() - presionInicio;
+
+                if (!presionado || corriendo || enInspeccion) {
+                    clearInterval(verificar);
+                    isArmed = false;
+                    return;
+                }
+
+                if (duracion >= 250) {
+                    cronometro.style.color = "green";
+                    clearInterval(verificar);
+                    isArmed = false;
+                }
+            }, 10);
+        }
+    }
+
     document.addEventListener("keydown", (e) => {
         // Si la edición manual externa está activa en el menú superior, cancela la lógica de arranque
         if (isEditable) return;
@@ -175,102 +241,24 @@ export function eventosTimer() {
             }
         }
 
-        // Si la inserción manual está encendida, se bloquea el uso de la barra espaciadora para cronometrar
+        // Si la insercion manual esta encendida, se bloquea el uso de la barra espaciadora para cronometrar
         if (manualState && e.code === "Space") return;
 
-        if (e.code === "Space" || e.code === "Enter") {
-            e.preventDefault();
-
-            // CASO 1: El cronómetro está corriendo -> SE DETIENE EL SOLVE DE FORMA INMEDIATA Y SE ARCHIVA
-            if (corriendo) {
-                clearInterval(intervalo);
-                corriendo = false;
-                presionado = false;
-
-                // Captura matemática de precisión temporal absoluta
-                const rawTime = (new Date() - inicio) / 1000;
-                cronometro.textContent = rawTime.toFixed(2);
-                inicio = null;
-
-                // Re-despliega de vuelta los elementos difuminados de la UI
-                if (ocultar_elementos)
-                    ocultar_elementos.classList.remove("activo");
-
-                // Empaqueta y despacha el solve construido hacia el módulo CRUD de IndexedDB
-                const data = arrayInfo();
-                if (data) añadir(data);
-
-                resetPenalties();
-                menuScramble[0].click(); // Genera automáticamente el nuevo scramble consecutivo
-
-                // Bloqueo técnico de retardo (950ms) para neutralizar arranques accidentales al soltar bruscamente
-                bloqueoInicio = true;
-                setTimeout(() => {
-                    bloqueoInicio = false;
-                }, 950);
-                return;
-            }
-
-            // CASO 2: Cuenta regresiva de Inspección en progreso -> El usuario presiona espacio preparándose para salir
-            if (
-                enInspeccion &&
-                e.code === "Space" &&
-                !preparandoDesdeInspeccion
-            ) {
-                preparandoDesdeInspeccion = true;
-                // Transiciona instantáneamente a color verde: Informa que el timer está listo para dispararse sin demoras
-                cronometro.style.color = "green";
-                return;
-            }
-
-            // CASO 3: Modo de inserción por teclado de tiempos (Manual Mode) activo
-            if (manualState && e.code === "Enter") {
-                const data = arrayInfo();
-                if (data) añadir(data);
-
-                menuScramble[0].click(); // Fuerza la renovación del scramble actual
-                manually_times.value = ""; // Formatea de vuelta la caja de texto numérico
-                return;
-            }
-
-            // CASO 4: Estado estacionario en reposo -> Preparando el arranque directo (Cambio cromático de advertencia a Rojo)
-            if (
-                !enInspeccion &&
-                !corriendo &&
-                !presionado &&
-                !bloqueoInicio &&
-                e.code === "Space"
-            ) {
-                presionado = true;
-                presionInicio = Date.now();
-                isArmed = true;
-
-                cronometro.style.color = "red";
-                if (ocultar_elementos)
-                    ocultar_elementos.classList.add("activo"); // Aplica difuminado cinematográfico en el fondo
-
-                // Bucle asíncrono de microtemporización encargado de verificar el delay técnico de seguridad (250ms)
-                const verificar = setInterval(() => {
-                    const duracion = Date.now() - presionInicio;
-
-                    // Si el estado interno colapsó o se interrumpió la pulsación en plena verificación, liquida el intervalo
-                    if (!presionado || corriendo || enInspeccion) {
-                        clearInterval(verificar);
-                        isArmed = false;
-                        return;
-                    }
-
-                    // Si supera el umbral oficial (250ms), el timer se considera "armado de forma válida" y cambia a Verde
-                    if (duracion >= 250) {
-                        cronometro.style.color = "green";
-                        clearInterval(verificar);
-                        isArmed = false;
-                    }
-                }, 10);
-            }
+        if (e.code === "Space") {
+            handlePress(e);
+            return;
         }
 
-        // Botón de escape de emergencia (Escape): Interrumpe y aborta de cuajo penalizaciones de inspección o solves accidentales
+        if (manualState && e.code === "Enter") {
+            const data = arrayInfo();
+            if (data) añadir(data);
+
+            menuScramble[0].click();
+            manually_times.value = "";
+            return;
+        }
+
+        // Boton de escape de emergencia (Escape): Interrumpe y aborta de cuajo penalizaciones de inspeccion o solves accidentales
         if (e.code === "Escape" && (corriendo || enInspeccion)) {
             clearInterval(intervalo);
             clearInterval(intervaloInspeccion);
@@ -290,8 +278,96 @@ export function eventosTimer() {
     });
 
     /* -------------------------------------------------------
-      MANEJO DEL KEYUP (Liberación de teclas / Disparo de Inspección o Solve Oficial)
-  ------------------------------------------------------- */
+      MANEJO DEL KEYUP (Liberacion de teclas / Disparo de Inspeccion o Solve Oficial)
+    ------------------------------------------------------- */
+
+    // Funcion compartida: logica de liberacion (teclado Space + touch)
+    function handleRelease() {
+        // Si el cerrojo post-solve sigue retenido por tiempo, resetea la estetica y detiene el flujo
+        if (bloqueoInicio) {
+            presionado = false;
+            cronometro.style.color = "#f5f5f5";
+            return;
+        }
+
+        // Filtro de redundancia: si el solve ya arranco, ignora impulsos remanentes
+        if (corriendo) {
+            presionado = false;
+            presionInicio = null;
+            return;
+        }
+
+        // === SUB-MAQUINA: LANZAMIENTO INSTANTANEO DESDE ESTADO DE INSPECCION WCA ===
+        if (enInspeccion && preparandoDesdeInspeccion) {
+            preparandoDesdeInspeccion = false;
+
+            clearInterval(intervaloInspeccion);
+            enInspeccion = false;
+
+            corriendo = true;
+            inicio = new Date();
+            cronometro.textContent = hideTimeState ? "--" : "0.00";
+            intervalo = setInterval(actualizar, 10);
+            cronometro.style.color = "#f5f5f5";
+            return;
+        }
+
+        const duracion = presionInicio ? Date.now() - presionInicio : 0;
+
+        // === SUB-MAQUINA: DISPARAR ETAPA DE INSPECCION O ARRANQUE DIRECTO ===
+        if (!corriendo && !enInspeccion && duracion >= 250) {
+            if (manualState) return;
+
+            if (useInspection) {
+                enInspeccion = true;
+                resetPenalties();
+                let transcurrido = 0;
+                cronometro.textContent = "15";
+                cronometro.style.color = "#ffa500";
+
+                intervaloInspeccion = setInterval(() => {
+                    if (preparandoDesdeInspeccion) return;
+
+                    transcurrido++;
+                    let restante = 15 - transcurrido;
+
+                    if (restante > 0) {
+                        cronometro.textContent = restante;
+                    } else if (restante === 0) {
+                        penalizacionMasDos = true;
+                        cronometro.textContent = "+2";
+                        cronometro.style.color = "#ff6347";
+                    } else if (restante === -1) {
+                        cronometro.textContent = "+2";
+                    } else {
+                        penalizacionMasDos = false;
+                        penalizacionDNF = true;
+                        cronometro.textContent = "DNF";
+                        cronometro.style.color = "red";
+                    }
+                }, 1000);
+            } else {
+                corriendo = true;
+                inicio = new Date();
+                cronometro.textContent = hideTimeState ? "--" : "0.00";
+                intervalo = setInterval(actualizar, 10);
+                cronometro.style.color = "#f5f5f5";
+            }
+            isArmed = false;
+        }
+
+        // Caso Borde: el usuario solto antes de cumplir el minimo de 250ms
+        if (isArmed && !corriendo) {
+            cronometro.style.color = "#f5f5f5";
+            isArmed = false;
+            if (ocultar_elementos)
+                ocultar_elementos.classList.remove("activo");
+        }
+
+        presionado = false;
+        presionInicio = null;
+    }
+
     document.addEventListener("keyup", (e) => {
         // Si editar está encendido, cancela de raíz cualquier alteración en la UI
         if (isEditable) return;
@@ -306,98 +382,45 @@ export function eventosTimer() {
         }
 
         if (e.code === "Space") {
-            // Si el cerrojo post-solve sigue retenido por tiempo, resetea la estética y detiene el flujo
-            if (bloqueoInicio) {
-                presionado = false;
-                cronometro.style.color = "#f5f5f5";
-                return;
-            }
+            handleRelease();
+        }
+    });
 
-            // Filtro de redundancia: si el solve ya arrancó, ignora impulsos remanentes
-            if (corriendo) {
-                presionado = false;
-                presionInicio = null;
-                return;
-            }
+    /* =========================================================
+       TOUCH SUPPORT — EQUIVALENTE TACTIL DE LA BARRA ESPACIADORA
+       El .contenedor actua como zona tactil para iniciar/detener el timer.
+       ========================================================= */
 
-            // === SUB-MÁQUINA: LANZAMIENTO INSTANTÁNEO DESDE ESTADO DE INSPECCIÓN WCA ===
-            if (enInspeccion && preparandoDesdeInspeccion) {
-                preparandoDesdeInspeccion = false;
+    const touchZone = document.querySelector(".contenedor");
 
-                // Rompe de raíz el reloj de cuenta regresiva de los 15 segundos reglamentarios
-                clearInterval(intervaloInspeccion);
-                enInspeccion = false;
+    function isInteractive(el) {
+        return el.closest(
+            "button, select, textarea, input, .fila_front, .promedios, .nav_bar, .hamburger-btn, .stats-inline, .sheet-handle--stats",
+        );
+    }
 
-                // Conmuta e inicia el cronómetro oficial de la resolución al soltar la barra espaciadora
-                corriendo = true;
-                inicio = new Date();
-                cronometro.textContent = hideTimeState ? "--" : "0.00";
-                intervalo = setInterval(actualizar, 10);
-                cronometro.style.color = "#f5f5f5";
-                return;
-            }
+    touchZone.addEventListener("touchstart", (e) => {
+        if (isEditable || manualState || isInteractive(e.target) || bloqueoInicio)
+            return;
+        e.preventDefault();
+        handlePress(e);
+    });
 
-            const duracion = presionInicio ? Date.now() - presionInicio : 0;
+    touchZone.addEventListener("touchend", (e) => {
+        if (isEditable || manualState || isInteractive(e.target)) return;
+        e.preventDefault();
+        handleRelease();
+    });
 
-            // === SUB-MÁQUINA: DISPARAR ETAPA DE INSPECCIÓN O ARRANQUE DIRECTO (Desde Reposo Válido) ===
-            if (!corriendo && !enInspeccion && duracion >= 250) {
-                if (manualState) return;
-
-                // Opción A: Inicializa la cuenta regresiva estricta de 15 segundos de la WCA
-                if (useInspection) {
-                    enInspeccion = true;
-                    resetPenalties();
-                    let transcurrido = 0;
-                    cronometro.textContent = "15";
-                    cronometro.style.color = "#ffa500"; // Naranja corporativo de inspección activa
-
-                    intervaloInspeccion = setInterval(() => {
-                        // Si el usuario vuelve a presionar espacio reteniendo el conteo visual, pausa el decremento textual
-                        if (preparandoDesdeInspeccion) return;
-
-                        transcurrido++;
-                        let restante = 15 - transcurrido;
-
-                        if (restante > 0) {
-                            cronometro.textContent = restante;
-                        } else if (restante === 0) {
-                            // Ventana crítica: Excedió los 15 segundos -> Aplica penalización reglamentaria +2 segundos
-                            penalizacionMasDos = true;
-                            cronometro.textContent = "+2";
-                            cronometro.style.color = "#ff6347";
-                        } else if (restante === -1) {
-                            cronometro.textContent = "+2";
-                        } else {
-                            // Superó el umbral límite de la ventana límite de inspección de 17s total -> El solve se declara DNF
-                            penalizacionMasDos = false;
-                            penalizacionDNF = true;
-                            cronometro.textContent = "DNF";
-                            cronometro.style.color = "red";
-                        }
-                    }, 1000);
-
-                    // Opción B: Disparo limpio directo tradicional (Arranque instantáneo sin inspección previa)
-                } else {
-                    corriendo = true;
-                    inicio = new Date();
-                    cronometro.textContent = hideTimeState ? "--" : "0.00";
-                    intervalo = setInterval(actualizar, 10);
-                    cronometro.style.color = "#f5f5f5";
-                }
-                isArmed = false;
-            }
-
-            // Caso Borde: El usuario soltó la barra de espacio antes de cumplir el requisito mínimo de 250ms (Falso arranque)
-            if (isArmed && !corriendo) {
-                cronometro.style.color = "#f5f5f5";
-                isArmed = false;
-                if (ocultar_elementos)
-                    ocultar_elementos.classList.remove("activo");
-            }
-
-            // Vacía el buffer de variables temporales de pulsación tras procesar con éxito el levantamiento de tecla
-            presionado = false;
-            presionInicio = null;
+    touchZone.addEventListener("touchcancel", () => {
+        presionado = false;
+        presionInicio = null;
+        isArmed = false;
+        if (!corriendo && !enInspeccion) {
+            clearInterval(intervalo);
+            cronometro.textContent = "0.00";
+            cronometro.style.color = "#f5f5f5";
+            if (ocultar_elementos) ocultar_elementos.classList.remove("activo");
         }
     });
 }
