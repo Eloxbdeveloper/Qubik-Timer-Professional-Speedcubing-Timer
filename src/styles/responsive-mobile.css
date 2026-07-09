@@ -35,6 +35,14 @@
         display: none !important;
     }
 
+    .overlay_card {
+        position: fixed !important;
+        inset: 0;
+        width: auto;
+        height: auto;
+        z-index: 110;
+    }
+
     /* ----------------------------------------------------------------------
        1. HAMBURGER BUTTON
        ---------------------------------------------------------------------- */
@@ -775,19 +783,26 @@
        ---------------------------------------------------------------------- */
 
     .overlay_card {
+        position: fixed !important;
+        inset: 0;
+        width: auto;
+        height: auto;
         padding: 8px;
+        z-index: 110;
     }
 
     .card {
         width: 96% !important;
-        height: 94% !important;
+        height: auto;
+        max-height: 82vh;
         border-radius: 20px;
         padding: 8px;
     }
 
     .card_stats {
         width: 96% !important;
-        height: 92% !important;
+        height: auto;
+        max-height: 82vh;
         border-radius: 20px;
         padding: 0 14px;
     }
