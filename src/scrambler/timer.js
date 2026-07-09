@@ -395,7 +395,7 @@ export function eventosTimer() {
 
     function isInteractive(el) {
         return el.closest(
-            "button, select, textarea, input, .fila_front, .promedios, .nav_bar, .hamburger-btn, .stats-inline, .sheet-handle--stats",
+            "button, select, textarea, input, .fila_front, .promedios, .nav_bar, .hamburger-btn, .stats-inline, .sheet-handle--stats, .overlay_card, .config-overlay",
         );
     }
 
