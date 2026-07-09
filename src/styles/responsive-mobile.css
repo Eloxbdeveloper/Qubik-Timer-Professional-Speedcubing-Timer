@@ -1,0 +1,884 @@
+/* ==========================================================================
+   SECCION: ELEMENTOS MOBILE-ONLY — OCULTOS POR DEFECTO
+   ========================================================================== */
+
+.hamburger-btn {
+    display: none;
+}
+
+.stats-inline {
+    display: none;
+}
+
+.cube-stats-row {
+    display: contents;
+}
+
+.scramble-header {
+    display: contents;
+}
+
+/* ==========================================================================
+   SECCION: ADAPTACION RESPONSIVE — TABLETS (1024px)
+   Compacta el layout desktop sin reestructurar. Mantiene sidebar visible.
+   ========================================================================== */
+@media screen and (max-width: 1024px) {
+
+    /* ----------------------------------------------------------------------
+       0. DESBLOQUEO DE LA INTERFAZ (anula el bloqueo mobile de 1000px)
+       ---------------------------------------------------------------------- */
+    .contenedor {
+        display: flex !important;
+    }
+
+    .mobile {
+        display: none !important;
+    }
+
+    /* ----------------------------------------------------------------------
+       1. HAMBURGER BUTTON
+       ---------------------------------------------------------------------- */
+
+    .hamburger-btn {
+        display: flex;
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 101;
+        width: 42px;
+        height: 42px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        cursor: pointer;
+        padding: 0;
+        outline: none;
+    }
+
+    .hamburger-btn span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: #d0d0d0;
+        border-radius: 2px;
+        transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .contenedor.nav-open .hamburger-btn span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .contenedor.nav-open .hamburger-btn span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .contenedor.nav-open .hamburger-btn span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* ----------------------------------------------------------------------
+       2. SIDEBAR — OFF-CANVAS
+       ---------------------------------------------------------------------- */
+
+    .navbar {
+        position: fixed !important;
+        left: 0;
+        top: 0;
+        width: 260px !important;
+        height: 100vh !important;
+        z-index: 100 !important;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 64px 12px 20px !important;
+        border-radius: 0;
+    }
+
+    .navbar.open {
+        transform: translateX(0);
+    }
+
+    .navbar:hover {
+        width: 260px !important;
+    }
+
+    .navbar__label {
+        display: flex !important;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .navbar .navbar__logo {
+        width: 80%;
+        height: 42px;
+        margin-top: 0;
+        margin-bottom: 4vh;
+    }
+
+    .navbar:hover .navbar__logo {
+        transform: scale(1.1);
+    }
+
+    .navbar__item {
+        min-height: 48px;
+        padding: 0 12px;
+        width: calc(100% - 16px);
+    }
+
+    .navbar__item ion-icon,
+    .navbar__item .material-symbols-outlined {
+        font-size: 22px;
+        min-width: 22px;
+    }
+
+    .navbar__item:nth-last-child(2) {
+        margin-top: 4vh;
+    }
+
+    /* Overlay oscuro detras del sidebar */
+    .contenedor.nav-open::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 50;
+    }
+
+    /* ----------------------------------------------------------------------
+       3. SELECTORES DE CATEGORIA — ANCLADOS JUNTO A LA NAV
+       ---------------------------------------------------------------------- */
+
+    .selects_category {
+        left: 14px !important;
+        top: 14px !important;
+        gap: 8px;
+        margin-left: 3em;
+    }
+
+    .select_categoria,
+    .select_sesiones {
+        min-width: 85px;
+        height: 28px;
+        padding: 4px 24px 4px 10px;
+        font-size: 11px;
+        border-radius: 12px;
+        background-position: calc(100% - 10px) 50%;
+    }
+
+    /* ----------------------------------------------------------------------
+       3. MENU DE SCRAMBLE + TIMER — RECOMPACTO
+       ---------------------------------------------------------------------- */
+
+    .scramble-menu {
+        right: 35px !important;
+        bottom: 55px !important;
+        width: 42% !important;
+        padding-right: 6em;
+    }
+
+    .notacion {
+        width: 95% !important;
+        max-width: 420px;
+        font-size: 16px !important;
+    }
+
+    /* ----------------------------------------------------------------------
+       4. CRONOMETRO PRINCIPAL
+       ---------------------------------------------------------------------- */
+
+    .time {
+        font-size: 90px !important;
+    }
+
+    .manually_times {
+        font-size: 48px;
+    }
+
+    /* ----------------------------------------------------------------------
+       5. VISOR DEL CUBO 2D
+       ---------------------------------------------------------------------- */
+
+    .cubo {
+        transform: scale(0.65);
+        transform-origin: bottom left;
+        left: 5%;
+    }
+
+    /* ----------------------------------------------------------------------
+       6. PANEL DERECHO (SOLVES + PROMEDIOS)
+       ---------------------------------------------------------------------- */
+
+    .fila_front {
+        width: 34% !important;
+        right: 2px;
+        height: 96vh;
+        gap: 6px;
+        padding: 6px 10px;
+    }
+
+    /* Panel de historial de tiempos */
+    .contenedor_data {
+        height: 42% !important;
+        min-height: 120px;
+        padding: 8px 14px;
+        border-radius: 22px;
+    }
+
+    .archivador {
+        gap: 6px;
+    }
+
+    .archivador::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    /* Filas de tiempos */
+    .indice,
+    .tiempo {
+        font-size: 15px;
+    }
+
+    .mini_btn {
+        font-size: 13px;
+        padding: 5px 6px;
+    }
+
+    /* Panel de promedios */
+    .promedios {
+        width: 97% !important;
+        height: 60% !important;
+        flex: 0 0 190px !important;
+        padding: 6px;
+        border-radius: 22px;
+    }
+
+    .box_promedios {
+        gap: 5px;
+    }
+
+    .promedios_ao5 {
+        border-radius: 16px;
+    }
+
+    .time_promedio {
+        font-size: 15px !important;
+    }
+
+    /* Tarjeta destacada (Ao5 Global) */
+    .promedios_ao5:nth-child(5) .time_promedio {
+        font-size: 30px !important;
+        margin-bottom: 14px;
+    }
+
+    .promedios_ao5 select {
+        margin: 5px 10px;
+        padding: 5px;
+        font-size: 10px;
+        width: 75%;
+    }
+
+    /* ----------------------------------------------------------------------
+       7. MODALES — MAS ANCHOS PARA MANTENER LEGIBILIDAD
+       ---------------------------------------------------------------------- */
+
+    /* Modal de detalle de solve */
+    .card {
+        width: 58% !important;
+        height: 90% !important;
+        border-radius: 24px;
+    }
+
+    .time_card {
+        font-size: 42px !important;
+    }
+
+    .cubo_card {
+        transform: scale(0.7);
+        transform-origin: center;
+        margin: 5px auto !important;
+    }
+
+    .combination_card {
+        font-size: 14px !important;
+        width: 88% !important;
+    }
+
+    .btns_card_top {
+        height: 40px !important;
+        padding: 5px 10px !important;
+    }
+
+    .btn_card_start {
+        font-size: 14px;
+    }
+
+    /* Modal de estadisticas */
+    .card_stats {
+        width: 55% !important;
+        height: 86% !important;
+        padding: 0 20px;
+        border-radius: 24px;
+    }
+
+    .avgtext_card,
+    .avg_stats,
+    .actual_stats {
+        font-size: 22px;
+    }
+
+    .date_stats {
+        font-size: 13px;
+    }
+
+    .list_stats {
+        height: 50%;
+        margin-top: 25px;
+    }
+
+    .index_stats,
+    .time_stats {
+        font-size: 15px;
+    }
+
+    .view_solve {
+        width: 90px;
+        font-size: 15px;
+    }
+
+    .text_card {
+        margin-top: 45px;
+    }
+
+    /* Modal de configuracion */
+    .config-card {
+        width: 65% !important;
+        height: 52% !important;
+        padding: 20px 18px;
+        border-radius: 24px;
+    }
+
+    .config-title {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .config-text {
+        font-size: 13px;
+    }
+
+    .config-item {
+        padding: 10px 6px;
+    }
+
+    .config-close {
+        width: 34px;
+        height: 34px;
+        font-size: 22px;
+    }
+
+    /* Modal de donaciones */
+    .donate-card {
+        width: 90% !important;
+        max-width: 520px;
+        height: 88% !important;
+        border-radius: 24px;
+    }
+
+    .banner {
+        height: 70px !important;
+    }
+
+    .donate-title {
+        font-size: 24px !important;
+        margin: 12px auto 20px !important;
+    }
+
+    .text_donate {
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        width: 85% !important;
+    }
+
+    .qr_container {
+        gap: 25px !important;
+        padding: 12px 20px !important;
+    }
+
+    .qr_national,
+    .qr_international {
+        width: 140px !important;
+        height: 140px !important;
+    }
+
+    .donate_method span {
+        font-size: 12px !important;
+    }
+
+    .donate_counter {
+        margin-top: 8px !important;
+    }
+
+    /* ----------------------------------------------------------------------
+       8. ESTADO VACIO DEL ARCHIVADOR
+       ---------------------------------------------------------------------- */
+
+    .archivador.vacio {
+        background-size: 160px;
+    }
+
+    /* ----------------------------------------------------------------------
+       9. BOTONES DE ACCION RAPIDA
+       ---------------------------------------------------------------------- */
+
+    .btn2 {
+        height: 36px;
+        width: 36px;
+        margin: 14px 8px;
+        margin-bottom: 8px;
+    }
+
+}
+
+/* ==========================================================================
+   SECCION: ADAPTACION RESPONSIVE — MOVILES (520px)
+   Reestructuracion completa: flex column, off-canvas sidebar, bottom sheets.
+   ========================================================================== */
+@media screen and (max-width: 520px) {
+
+    /* ----------------------------------------------------------------------
+       0. ROOT — FLEX COLUMN, SCROLL HABILITADO
+       ---------------------------------------------------------------------- */
+
+    html {
+        height: 100vh;
+    }
+
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .contenedor {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 85vh;
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .ocultar {
+        display: none !important;
+    }
+
+    /* ----------------------------------------------------------------------
+       1. SUB-CONTENEDOR 1 — DROPDOWNS
+       ---------------------------------------------------------------------- */
+
+    .selects_category {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 16px 16px 8px;
+        margin-left: 0;
+        width: 100%;
+        flex-shrink: 0;
+    }
+
+    .select_categoria,
+    .select_sesiones {
+        flex: 1;
+        max-width: 155px;
+        min-width: 0;
+        height: 32px;
+        font-size: 12px;
+        padding: 5px 28px 5px 12px;
+    }
+
+    /* ----------------------------------------------------------------------
+       2. SUB-CONTENEDOR 2 — SCRAMBLE + TIMER
+       ---------------------------------------------------------------------- */
+
+    .scramble-menu {
+        position: relative !important;
+        right: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        min-height: 0;
+    }
+
+    .scramble-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+        flex-shrink: 0;
+        margin-top: 6em;
+    }
+
+    .notacion {
+        width: 100% !important;
+        max-width: 100% !important;
+        font-size: clamp(13px, 3.5vw, 16px) !important;
+        min-height: auto;
+        padding: 4px;
+    }
+
+    .time {
+        font-size: clamp(56px, 14vw, 90px) !important;
+    }
+
+    .manually_times {
+        font-size: clamp(32px, 8vw, 48px);
+        width: 85%;
+    }
+
+    .botones {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .btn2 {
+        height: 36px;
+        width: 36px;
+        margin: 8px 6px;
+        margin-bottom: 4px;
+    }
+
+    /* ----------------------------------------------------------------------
+       3. SUB-CONTENEDOR 3 — CUBE + STATS INLINE
+       ---------------------------------------------------------------------- */
+
+    .cube-stats-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;           /* antes: auto */
+        gap: 12px;              /* espacio entre cubo y stats */
+        flex-shrink: 0;
+        box-sizing: border-box;
+        padding: 0 16px;         /* espacio lateral del contenedor */
+    }
+
+    .cube-stats-row .cubo {
+        flex: 1 1 0;            /* reparto igualitario, ignora width fijo */
+        max-width: 50%;
+        min-width: 0;           /* evita overflow por el transform:scale */
+        background-color: 0;
+        transform: scale(0.5);
+        transform-origin: center;
+        margin: 0;
+        position: relative !important;
+        left: auto !important;
+        bottom: auto !important;
+
+        background: none !important;
+        backdrop-filter: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        }
+
+
+    .cube-stats-row .stats-inline {
+        flex: 1 1 0;            /* mismo reparto que .cubo */
+        max-width: 50%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 8px 20px;       /* espacio interno de las stats */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;               /* un poco más de aire entre filas de stats */
+        }
+
+    .quick-stat {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 0 4px;
+    }
+
+    .quick-stat-label {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #8f8f8f;
+        font-family: 'Oxanium', sans-serif;
+        flex-shrink: 0;
+    }
+
+    .quick-stat-value {
+        font-family: 'Oxanium', sans-serif;
+        font-size: clamp(13px, 3.8vw, 20px);
+        font-weight: 600;
+        color: #f5f5f5;
+        text-align: right;
+    }
+
+    /* ----------------------------------------------------------------------
+       4. BOTTOM SHEET A — LISTA DE TIEMPOS (.fila_front)
+       ---------------------------------------------------------------------- */
+
+    .fila_front {
+        display: flex;
+        position: fixed !important;
+        bottom: 0;
+        left: 0;
+        width: 100% !important; 
+        height: 55vh;
+        z-index: 40;
+        transform: translateY(calc(100% - 48px));
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 20px 20px 0 0;
+        padding: 0 !important;
+        flex-direction: column;
+    }
+
+    .fila_front.open {
+        transform: translateY(0);
+    }
+
+    .fila_front::before {
+        content: '';
+        display: block;
+        width: 8em;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+        align-self: center; 
+        margin: 12px 0 8px 0;
+        flex-shrink: 0;
+    }
+
+    .contenedor_data {
+        height: calc(100% - 44px) !important;
+        border-radius: 0;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        padding: 10px 16px;
+        min-height: auto;
+        pointer-events: none;
+    }
+
+    .fila_front.open .contenedor_data {
+        pointer-events: auto;
+    }
+
+    .archivador {
+        gap: 5px;
+    }
+
+    .indice,
+    .tiempo {
+        font-size: 14px;
+    }
+
+    .mini_btn {
+        font-size: 12px;
+        padding: 4px 5px;
+    }
+
+    /* ----------------------------------------------------------------------
+       5. BOTTOM SHEET B — ESTADISTICAS DETALLADAS (.promedios)
+       ---------------------------------------------------------------------- */
+
+    .promedios {
+        display: none !important;
+        width: 100% !important;
+        height: auto !important;
+        flex: none !important;
+        border-radius: 0;
+    }
+
+    .promedios.expanded {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 0;
+        left: 0;
+        width: 100% !important;
+        height: 40vh !important;
+        z-index: 45;
+        border-radius: 20px 20px 0 0;
+        padding: 0;
+    }
+
+    /* Handle visual del sheet B */
+    .promedios.expanded::before {
+        content: '';
+        display: block;
+        width: 40px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.28);
+        border-radius: 2px;
+        align-self: center; 
+        margin: 8px auto;
+        flex-shrink: 0;
+    }
+
+    .promedios.expanded .box_promedios {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
+        gap: 6px;
+        padding: 4px 10px;
+        height: calc(100% - 32px);
+        width: 100%;
+    }
+
+    .promedios.expanded .promedios_ao5:nth-child(n+3) {
+        display: flex;
+    }
+
+    .promedios.expanded .promedios_ao5:nth-child(5) {
+        grid-column: 1 / 3;
+        grid-row: 2 / 4;
+    }
+
+    .promedios.expanded .promedios_ao5 {
+        border-radius: 14px;
+    }
+
+    .promedios.expanded .time_promedio {
+        font-size: 14px !important;
+    }
+
+    .promedios.expanded .promedios_ao5:nth-child(5) .time_promedio {
+        font-size: 26px !important;
+        margin-bottom: 10px;
+    }
+
+    .promedios.expanded .promedios_ao5 select {
+        font-size: 9px;
+        margin: 4px 8px;
+        padding: 4px;
+    }
+
+    /* ----------------------------------------------------------------------
+       6. MODALES — FULL WIDTH
+       ---------------------------------------------------------------------- */
+
+    .overlay_card {
+        padding: 8px;
+    }
+
+    .card {
+        width: 96% !important;
+        height: 94% !important;
+        border-radius: 20px;
+        padding: 8px;
+    }
+
+    .card_stats {
+        width: 96% !important;
+        height: 92% !important;
+        border-radius: 20px;
+        padding: 0 14px;
+    }
+
+    .config-card {
+        width: 94% !important;
+        height: 60% !important;
+        border-radius: 20px;
+        padding: 18px 14px;
+    }
+
+    .donate-card {
+        width: 96% !important;
+        max-width: 100% !important;
+        height: 94% !important;
+        border-radius: 20px;
+    }
+
+    .time_card {
+        font-size: 36px !important;
+    }
+
+    .combination_card {
+        font-size: 13px !important;
+        width: 94% !important;
+    }
+
+    .cubo_card {
+        transform: scale(0.6);
+        transform-origin: center;
+    }
+
+    .btns_card_top {
+        height: 36px !important;
+        padding: 4px 8px !important;
+    }
+
+    .btn_card_start {
+        font-size: 13px;
+    }
+
+    .avgtext_card,
+    .avg_stats,
+    .actual_stats {
+        font-size: 18px;
+    }
+
+    .text_card {
+        margin-top: 40px;
+    }
+
+    .list_stats {
+        height: 45%;
+        margin-top: 18px;
+    }
+
+    .banner {
+        height: 55px !important;
+    }
+
+    .donate-title {
+        font-size: 20px !important;
+        margin: 10px auto 14px !important;
+    }
+
+    .text_donate {
+        font-size: 12px !important;
+        line-height: 1.4 !important;
+        width: 90% !important;
+    }
+
+    .qr_container {
+        flex-direction: column;
+        gap: 16px !important;
+        padding: 8px 16px !important;
+    }
+
+    .qr_national,
+    .qr_international {
+        width: 120px !important;
+        height: 120px !important;
+    }
+
+    /* ----------------------------------------------------------------------
+       7. SAFE AREA (notch / home indicator)
+       ---------------------------------------------------------------------- */
+
+    .fila_front,
+    .promedios.expanded {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+}
+

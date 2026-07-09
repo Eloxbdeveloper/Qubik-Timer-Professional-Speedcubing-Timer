@@ -63,3 +63,11 @@
  * para resoluciones críticas (laptops cortas, entornos móviles y TVs grandes).
  */
 @import url('responsive.css');
+
+/**
+ * 9. ADAPTABILIDAD MOVIL Y TABLET (RESPONSIVE MOBILE & TABLET OVERRIDES)
+ * - NOTA CRITICA DE CASCADA: Se importa al final absoluto del archivo maestro.
+ * - Contiene media queries especificas para tablets (max-width: 1024px) y moviles
+ * (max-width: 768px), sobreescribiendo los modulos superiores con maxima prioridad.
+ */
+@import url('responsive-mobile.css');

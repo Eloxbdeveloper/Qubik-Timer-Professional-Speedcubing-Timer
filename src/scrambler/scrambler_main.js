@@ -39,9 +39,103 @@ notacion.addEventListener("input", () => {
  */
 window.addEventListener("DOMContentLoaded", () => {
 
-  // Instancia e inicializa los controladores de escucha asíncronos para el cronómetro principal
+  // Instancia e inicializa los controladores de escucha asincronos para el cronometro principal
   eventosTimer();
 
-  // Acopla los listeners interactivos correspondientes a los botones de manipulación del scramble (Copia, Nuevo, Edición)
+  // Acopla los listeners interactivos correspondientes a los botones de manipulacion del scramble (Copia, Nuevo, Edicion)
   eventosScramble();
+
+  /* ======================================================================
+     SECCION: CONTROLES RESPONSIVE MOVIL (HAMBURGER + BOTTOM SHEETS)
+     ====================================================================== */
+
+  const hamburgerBtn = document.querySelector('.hamburger-btn');
+  const navBar = document.querySelector('.navbar');
+  const contenedor = document.querySelector('.contenedor');
+  const filaFront = document.querySelector('.fila_front');
+  const promedios = document.querySelector('.promedios');
+  const statsInline = document.querySelector('.stats-inline');
+
+  // --- Hamburger: toggle sidebar off-canvas ---
+  hamburgerBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navBar?.classList.toggle('open');
+    contenedor?.classList.toggle('nav-open');
+  });
+
+  // --- Cerrar sidebar al hacer clic fuera de ella ---
+  contenedor?.addEventListener('click', (e) => {
+    if (!navBar?.classList.contains('open')) return;
+    if (!navBar.contains(e.target) && !hamburgerBtn?.contains(e.target)) {
+      navBar.classList.remove('open');
+      contenedor.classList.remove('nav-open');
+    }
+  });
+
+  // --- Bottom Sheet A (times) ---
+  filaFront?.addEventListener('click', function (e) {
+    const rect = this.getBoundingClientRect();
+    const clickY = e.clientY - rect.top;
+    const handleHeight = 44;
+
+    if (clickY <= handleHeight) {
+      this.classList.toggle('open');
+    }
+  });
+
+  // --- Bottom Sheet B (stats) ---
+  statsInline?.addEventListener('click', () => {
+    const isExpanded = promedios?.classList.contains('expanded');
+    if (!isExpanded) {
+      document.body.appendChild(promedios);
+    } else {
+      filaFront?.appendChild(promedios);
+    }
+    promedios?.classList.toggle('expanded');
+  });
+
+  promedios?.addEventListener('click', function (e) {
+    if (!this.classList.contains('expanded')) return;
+    const rect = this.getBoundingClientRect();
+    const clickY = e.clientY - rect.top;
+    const handleHeight = 36;
+
+    if (clickY <= handleHeight) {
+      this.classList.remove('expanded');
+      filaFront?.appendChild(promedios);
+    }
+  });
+
+  // --- Quick Stats: sincronizar stats-inline con los promedios renderizados ---
+  function updateQuickStats() {
+    const singleH2 = document.querySelector('.dates h2:first-child');
+    const mediaH2 = document.querySelector('.dates h2:last-child');
+    const mo3El = document.querySelector('.promedios_ao5:nth-child(1) .time_promedio');
+    const ao5El = document.querySelector('.promedios_ao5:nth-child(5) .time_promedio');
+    const ao12El = document.querySelector('.promedios_ao5:nth-child(2) .time_promedio');
+
+    const bestVal = document.querySelector('.quick-stat[data-type="best"] .quick-stat-value');
+    const actualVal = document.querySelector('.quick-stat[data-type="actual"] .quick-stat-value');
+    const mo3Val = document.querySelector('.quick-stat[data-type="mo3"] .quick-stat-value');
+    const ao5Val = document.querySelector('.quick-stat[data-type="ao5"] .quick-stat-value');
+    const ao12Val = document.querySelector('.quick-stat[data-type="ao12"] .quick-stat-value');
+
+    if (singleH2 && bestVal) bestVal.textContent = singleH2.textContent.replace('Single: ', '');
+    if (mediaH2 && actualVal) actualVal.textContent = mediaH2.textContent.replace('Media: ', '');
+    if (mo3El && mo3Val) mo3Val.textContent = mo3El.textContent;
+    if (ao5El && ao5Val) ao5Val.textContent = ao5El.textContent;
+    if (ao12El && ao12Val) ao12Val.textContent = ao12El.textContent;
+  }
+
+  // Observer: detecta cuando se renderizan los promedios en el DOM
+  if (promedios) {
+    const statsObserver = new MutationObserver(() => {
+      updateQuickStats();
+    });
+    statsObserver.observe(promedios, { childList: true, subtree: true });
+  }
+
+  // Llamada inicial por si los promedios ya estan renderizados
+  updateQuickStats();
+
 });

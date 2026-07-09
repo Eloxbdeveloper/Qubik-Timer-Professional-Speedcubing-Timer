@@ -103,7 +103,14 @@
   </head>
   <body>
     <div class="contenedor">
-      <div class="ocultar"></div>
+        
+        <div class="ocultar"></div>
+
+        <button class="hamburger-btn" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
       <nav class="navbar">
         <div class="navbar__logo"></div>
@@ -178,43 +185,24 @@
           </option>
         </select>
 
-        <select class="select_sesiones" aria-label="Select Session">
-          <option value="Session 1" class="option">Session 1</option>
-          <option value="Session 2" class="option">Session 2</option>
-          <option value="Session 3" class="option">Session 3</option>
-        </select>
-      </div>
-
-      <div class="scramble-menu">
-        <textarea
-          class="notacion"
-          readonly
-          aria-label="WCA Scramble Text"
-        ></textarea>
-
-        <div class="botones">
-          <button
-            class="material-symbols-outlined btn2"
-            title="Refresh"
-            aria-label="Refresh Scramble"
-          >
-            refresh
-          </button>
-          <button
-            class="material-symbols-outlined btn2"
-            title="Edit"
-            aria-label="Edit Scramble Manually"
-          >
-            edit
-          </button>
-          <button
-            class="material-symbols-outlined btn2"
-            title="Copy"
-            aria-label="Copy Scramble"
-          >
-            content_copy
-          </button>
+            <select class="select_sesiones" aria-label="Select Session">
+                <option value="Session 1" class="option">Session 1</option>
+                <option value="Session 2" class="option">Session 2</option>
+                <option value="Session 3" class="option">Session 3</option>
+            </select>
         </div>
+        
+        <div class="scramble-menu">
+            
+            <div class="scramble-header">
+                <textarea class="notacion" readonly aria-label="WCA Scramble Text"></textarea>
+    
+                <div class="botones">
+                    <button class="material-symbols-outlined btn2" title="Refresh" aria-label="Refresh Scramble">refresh</button>
+                    <button class="material-symbols-outlined btn2" title="Edit" aria-label="Edit Scramble Manually">edit</button>
+                    <button class="material-symbols-outlined btn2" title="Copy" aria-label="Copy Scramble">content_copy</button>
+                </div>
+            </div>
 
         <p class="time">0.00</p>
         <input
@@ -224,15 +212,41 @@
         />
       </div>
 
-      <div class="cubo"></div>
-
-      <div class="fila_front">
-        <div class="contenedor_data">
-          <div class="archivador"></div>
+        <div class="cube-stats-row">
+            <div class="cubo"></div>
+            <div class="stats-inline">
+                <div class="quick-stat" data-type="best">
+                    <span class="quick-stat-label">Best</span>
+                    <span class="quick-stat-value">--</span>
+                </div>
+                <div class="quick-stat" data-type="actual">
+                    <span class="quick-stat-label">Actual</span>
+                    <span class="quick-stat-value">--</span>
+                </div>
+                <div class="quick-stat" data-type="mo3">
+                    <span class="quick-stat-label">Mo3</span>
+                    <span class="quick-stat-value">--</span>
+                </div>
+                <div class="quick-stat" data-type="ao5">
+                    <span class="quick-stat-label">Ao5</span>
+                    <span class="quick-stat-value">--</span>
+                </div>
+                <div class="quick-stat" data-type="ao12">
+                    <span class="quick-stat-label">Ao12</span>
+                    <span class="quick-stat-value">--</span>
+                </div>
+            </div>
         </div>
+        
+        <div class="fila_front">
+            
+            <div class="contenedor_data">
+                <div class="archivador"></div>
+            </div>
+            
+            <div class="promedios"></div>
 
-        <div class="promedios"></div>
-      </div>
+         </div>
     </div>
 
     <div class="mobile">
