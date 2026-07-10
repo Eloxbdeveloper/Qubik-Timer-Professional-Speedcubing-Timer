@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" translate="no">
 <head>
-     <!-- Google tag (gtag.js) segundo repo-->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PW48J3HL7L"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-PW48J3HL7L');
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qubik Timer – Speedcubing Timer Online</title>
@@ -106,10 +98,21 @@
 
         <div class="selects_category">
             <select class="select_categoria" aria-label="Select Category">
+                
+                <option value="2x2" class="option">2x2</option>
                 <option value="3x3" class="option">3x3</option>
+                <option value="4x4" class="option">4x4</option>
+                <option value="5x5" class="option">5x5</option>
+                <option value="6x6" class="option">6x6</option>
+                <option value="7x7" class="option">7x7</option>
+                <option value="Megaminx" class="option">Megaminx</option>
+                <option value="Clock" class="option">Clock</option>
+                <option value="Square-1" class="option">Square-1</option>
+                <option value="Piraminx" class="option">Piraminx</option>
+                <option value="Skewb" class="option">Skewb</option>
                 <option value="3x3 OH" class="option">3x3 One Handed</option>
                 <option value="3x3 Blind" class="option">3x3 Blindfolded</option>
-                <option value="Coming Soon" class="option" disabled>Coming Soon...</option>
+                
             </select>
 
             <select class="select_sesiones" aria-label="Select Session">
@@ -183,9 +186,12 @@
     <script type="module" src="./src/configuration/configuration_render.js"></script>
     <script type="module" src="./src/configuration/configuration_overlay.js"></script>
     <script type="module" src="./src/sessions/sessions.js"></script>
+    <script type="module" src="./src/scrambler/cube_render.js"></script>
+    <script type="module" src="./src/scrambler/scrambler_engine.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
 </html>
+

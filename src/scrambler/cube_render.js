@@ -1,4 +1,6 @@
 // Contenedor principal del cubo en el DOM (donde se inyectarán las caras).
+import { select_categoria, select_sessiones } from "../sessions/sessions.js"
+
 export const cubo = document.querySelector(".cubo")
 
 // Contenedor de botones o controles interactivos asociados al cubo
@@ -13,7 +15,7 @@ export const colors = ["white", "blue", "green", "yellow", "red", "orange"]
  * Cada cara se modela como un contenedor que aloja exactamente 9 fichas individuales (sub-grilla 3x3).
  */
 export function crearCaras(div) {
-
+    if(select_categoria.value == "3x3" || select_categoria.value == "3x3 OH" || select_categoria.value == "3x3 Blind" ){
     // Itera a través del arreglo de colores para construir secuencialmente cada una de las 6 caras
     for (let color of colors) {
 
@@ -31,7 +33,7 @@ export function crearCaras(div) {
         // Inserta la cara completamente armada con sus 9 fichas dentro del contenedor del cubo recibido
         div.appendChild(cara)
     }
+    }
 }
 
 // Inicialización automática por defecto del cubo en la interfaz al completarse la carga del módulo en memoria
-crearCaras(cubo)

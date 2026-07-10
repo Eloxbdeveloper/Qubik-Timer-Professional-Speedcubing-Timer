@@ -5,14 +5,10 @@
  * sobre las 8 pegatinas perimetrales de dicha cara, asegurando que el centro permanezca intacto.
  */
 export const rotacion = (giro, faces) => {
-
-  // Desestructuración de las referencias de nodos correspondientes a las 6 caras del cubo
   const { white, yellow, green, blue, orange, red } = faces;
 
-  // Vector de índices mapeados de una cara estándar 3x3 (0 al 8)
   const indice = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
-  // Diccionario estratégico que asocia cada notación de giro con su matriz física de elementos del DOM
   const colorMap = {
     F: green, "F'": green, F2: green,
     B: blue, "B'": blue, B2: blue,
@@ -24,13 +20,12 @@ export const rotacion = (giro, faces) => {
 
   const color = colorMap[giro];
 
-  // Captura instantánea en un array de las clases CSS actuales (colores) antes de realizar el corrimiento
+  if (!color) return;
+
   const colorf = indice.map((i) => color[i].className);
 
-  // El centro (índice 4) no muta de posición en un cubo físico, se almacena de forma aislada
   const centerClass = colorf[4];
 
-  // Definición analítica de las tuplas de intercambio cíclico [índice_destino, índice_origen]
   const rotaciones = {
     simple: [[0,6],[6,8],[8,2],[2,0],[1,3],[3,7],[7,5],[5,1]],
     doble:  [[0,8],[8,0],[2,6],[6,2],[1,7],[7,1],[3,5],[5,3]],
@@ -39,7 +34,6 @@ export const rotacion = (giro, faces) => {
 
   let secuencia;
 
-  // Enruta de forma condicional el tipo de patrón cíclico basándose en el string del movimiento
   if (["F", "R", "U", "L", "B", "D"].includes(giro))
     secuencia = rotaciones.simple;
   else if (["R2", "B2", "U2", "L2", "F2", "D2"].includes(giro))
@@ -47,12 +41,10 @@ export const rotacion = (giro, faces) => {
   else
     secuencia = rotaciones.anti;
 
-  // Sobreescribe dinámicamente las clases del DOM reemplazando el color viejo por el nuevo del ciclo
   secuencia.forEach(([a, b]) => {
     color[a].classList.replace(colorf[a], colorf[b]);
   });
 
-  // Garantiza de forma estricta que la pieza central conserve su clase original
   color[4].className = centerClass;
 };
 
@@ -60,18 +52,14 @@ export const rotacion = (giro, faces) => {
 /*
  * movesRL(move, faces)
  * * Gestiona el movimiento de las capas izquierda (Left) y derecha (Right).
- * Realiza el corrimiento de las columnas de stickers laterales entre las caras adyacentes
- * (Front, Bottom/Yellow, Back, Top/White) invirtiendo el orden de índices cuando el cubo se despliega en 2D.
  */
 export const movesRL = (move, faces) => {
-
   const { white, yellow, green, blue, orange, red } = faces;
+  if (!white[0] || !yellow[0] || !green[0] || !blue[0]) return;
 
-  // Buffers temporales para salvaguardar las columnas de las caras Frontal y Trasera antes de reescribir
   let green036 = [green[0].className, green[3].className, green[6].className];
   let green258 = [green[2].className, green[5].className, green[8].className];
 
-  // Buffers temporales para salvaguardar las columnas de las caras Superior e Inferior
   let white036 = [white[0].className, white[3].className, white[6].className];
   let white258 = [white[2].className, white[5].className, white[8].className];
 
@@ -81,11 +69,10 @@ export const movesRL = (move, faces) => {
   let blue036 = [blue[0].className, blue[3].className, blue[6].className];
   let blue258 = [blue[2].className, blue[5].className, blue[8].className];
 
-  // === Bloque de Intercambio Líneo-Matricial para Capa Izquierda / Derecha ===
   if (move === "L'") {
     for (let i = 0; i < 3; i++) {
       green[i*3].classList.replace(green036[i], yellow036[i]);
-      yellow[i*3].classList.replace(yellow036[i], blue258[2-i]); // Invierte el índice por simetría de cara opuesta
+      yellow[i*3].classList.replace(yellow036[i], blue258[2-i]);
       blue[i*3+2].classList.replace(blue258[i], white036[2-i]);
       white[i*3].classList.replace(white036[i], green036[i]);
     }
@@ -115,22 +102,20 @@ export const movesRL = (move, faces) => {
     }
   }
 
-  // Ejecuta la rotación interna del plano bidimensional de la cara que rota
-  rotacion(move, faces);
+  if (["L", "L'", "R", "R'"].includes(move)) {
+    rotacion(move, faces);
+  }
 };
 
 
 /*
  * movesUD(move, faces)
  * * Gestiona los movimientos de la capa superior (Up) e inferior (Down).
- * Intercambia horizontalmente las filas de stickers (superiores de índice 0..2 o inferiores de índice 6..8)
- * entre las 4 caras laterales del cinturón del cubo (Front, Right, Back, Left) de forma secuencial.
  */
 export const movesUD = (move, faces) => {
-
   const { white, yellow, green, blue, orange, red } = faces;
+  if (!white[0] || !yellow[0] || !green[0] || !blue[0]) return;
 
-  // Captura instantánea de las filas horizontales críticas de cada cara lateral
   let green012 = [green[0].className, green[1].className, green[2].className];
   let green678 = [green[6].className, green[7].className, green[8].className];
 
@@ -143,7 +128,6 @@ export const movesUD = (move, faces) => {
   let orange012 = [orange[0].className, orange[1].className, orange[2].className];
   let orange678 = [orange[6].className, orange[7].className, orange[8].className];
 
-  // === Bloque de Intercambio Horizontal de Capas (U / D) ===
   if (move === "D'") {
     for (let i = 0; i < 3; i++) {
       green[6+i].classList.replace(green678[i], red678[i]);
@@ -177,22 +161,20 @@ export const movesUD = (move, faces) => {
     }
   }
 
-  // Ejecuta la rotación interna sobre las pegatinas superficiales de la cara U o D
-  rotacion(move, faces);
+  if (["U", "U'", "D", "D'"].includes(move)) {
+    rotacion(move, faces);
+  }
 };
 
 
 /*
  * movesFB(move, faces)
  * * Gestiona los movimientos de la capa frontal (Front) y trasera (Back).
- * Transfiere de forma ortogonal filas horizontales de las caras superior/inferior hacia
- * las columnas verticales de las caras laterales (Left, Right) cumpliendo con la proyección del cubo.
  */
 export const movesFB = (move, faces) => {
-
   const { white, yellow, green, blue, orange, red } = faces;
+  if (!white[0] || !yellow[0] || !green[0] || !blue[0]) return;
 
-  // === Bloque de Intercambio Cruzado (Filas <=> Columnas) para Capas F / B ===
   if (move === "F") {
     let whiteVals  = [white[6].className, white[7].className, white[8].className];
     let orangeVals = [orange[2].className, orange[5].className, orange[8].className];
@@ -206,7 +188,6 @@ export const movesFB = (move, faces) => {
       red[i*3].classList.replace(redVals[i], whiteVals[i]);
     }
   }
-
   else if (move === "F'") {
     let whiteVals  = [white[6].className, white[7].className, white[8].className];
     let orangeVals = [orange[2].className, orange[5].className, orange[8].className];
@@ -220,7 +201,6 @@ export const movesFB = (move, faces) => {
       red[i*3].classList.replace(redVals[i], yellowVals[2-i]);
     }
   }
-
   else if (move === "B") {
     let whiteVals  = [white[0].className, white[1].className, white[2].className];
     let orangeVals = [orange[0].className, orange[3].className, orange[6].className];
@@ -234,7 +214,6 @@ export const movesFB = (move, faces) => {
       red[2 + i*3].classList.replace(redVals[i], yellowVals[2-i]);
     }
   }
-
   else if (move === "B'") {
     let whiteVals  = [white[0].className, white[1].className, white[2].className];
     let orangeVals = [orange[0].className, orange[3].className, orange[6].className];
@@ -249,6 +228,7 @@ export const movesFB = (move, faces) => {
     }
   }
 
-  // Ejecuta la rotación sobre los 8 stickers perimetrales de la cara F o B
-  rotacion(move, faces);
+  if (["F", "F'", "B", "B'"].includes(move)) {
+    rotacion(move, faces);
+  }
 };

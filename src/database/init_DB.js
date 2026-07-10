@@ -10,28 +10,50 @@ const contenedor = document.querySelector(".contenedor");
 // export seguro basado en promesa: Variable global que almacenará la instancia de la base de datos
 export let db;
 
+let categories= ["cube3x3","cube3x3_oh","cube3x3_blind","cube2x2","cube4x4",
+    "cube5x5","cube6x6","cube7x7","cubeMegaminx","cubeClock","cubeSq1","cubePiraminx","cubeSkewb"]   
+
+let categories_sessions=[];
+
 // Promesa global para controlar la asincronía y asegurar que la base de datos esté lista antes de operar
 export const dbReady = new Promise((resolve, reject) => {
 
-    // Abre la base de datos "registros". Versión 12 (requerida para disparar onupgradeneeded si cambia la estructura)
-    const request = indexedDB.open("registros", 12);
+    // Abre la base de datos "registros". Versión 42 (requerida para disparar onupgradeneeded si cambia la estructura)
+    const request = indexedDB.open("registros", 42);
 
     // Evento de ciclo de vida: Se ejecuta si la base de datos no existe o si se incrementa la versión
     request.onupgradeneeded = function (e) {
-        db = e.target.result;
 
-        // --- Creación de Object Stores para Solves (Categoría: 3x3 normal) ---
-        if (!db.objectStoreNames.contains("cube3x3")) {
-            db.createObjectStore("cube3x3", { keyPath: "id", autoIncrement: true });
+          db = e.target.result;
+
+        for(let i=0;i<categories.length;i++){
+
+            for(let session=0;session<3;session++){
+
+                if(session==0){
+                    if (!db.objectStoreNames.contains(categories[i])) {
+                    db.createObjectStore(categories[i], { keyPath: "id", autoIncrement: true });
+                    }  
+
+                    categories_sessions.push(categories[i]);
+                }
+                else if(session==1){
+                    if (!db.objectStoreNames.contains(`${categories[i]}_session2`)) {
+                    db.createObjectStore(`${categories[i]}_session2`, { keyPath: "id", autoIncrement: true });
+                    }
+                    categories_sessions.push(`${categories[i]}_session2`); 
+                }
+
+                else if(session==2){
+                    if (!db.objectStoreNames.contains(`${categories[i]}_session3`)) {
+                    db.createObjectStore(`${categories[i]}_session3`, { keyPath: "id", autoIncrement: true });
+                    } 
+                    categories_sessions.push(`${categories[i]}_session3`);
+                }
+            }
+            
         }
 
-        if (!db.objectStoreNames.contains("cube3x3_session2")) {
-            db.createObjectStore("cube3x3_session2", { keyPath: "id", autoIncrement: true });
-        }
-
-        if (!db.objectStoreNames.contains("cube3x3_session3")) {
-            db.createObjectStore("cube3x3_session3", { keyPath: "id", autoIncrement: true });
-        }
 
         // --- Almacén para Historial de Promedios y Estadísticas (Mo3, Ao5, Ao12...) ---
         if (!db.objectStoreNames.contains("promDB")) {
@@ -48,31 +70,6 @@ export const dbReady = new Promise((resolve, reject) => {
             db.createObjectStore("selects_db", { keyPath: "id", autoIncrement: true });
         }
 
-        // --- Creación de Object Stores para Solves (Categoría: 3x3 One-Handed) ---
-        if (!db.objectStoreNames.contains("cube3x3_oh")) {
-            db.createObjectStore("cube3x3_oh", { keyPath: "id", autoIncrement: true });
-        }
-
-        if (!db.objectStoreNames.contains("cube3x3_oh_session2")) {
-            db.createObjectStore("cube3x3_oh_session2", { keyPath: "id", autoIncrement: true });
-        }
-
-        if (!db.objectStoreNames.contains("cube3x3_oh_session3")) {
-            db.createObjectStore("cube3x3_oh_session3", { keyPath: "id", autoIncrement: true });
-        }
-
-        // --- Creación de Object Stores para Solves (Categoría: 3x3 Blindfolded) ---
-        if (!db.objectStoreNames.contains("cube3x3_blind")) {
-            db.createObjectStore("cube3x3_blind", { keyPath: "id", autoIncrement: true });
-        }
-
-        if (!db.objectStoreNames.contains("cube3x3_blind_session2")) {
-            db.createObjectStore("cube3x3_blind_session2", { keyPath: "id", autoIncrement: true });
-        }
-
-        if (!db.objectStoreNames.contains("cube3x3_blind_session3")) {
-            db.createObjectStore("cube3x3_blind_session3", { keyPath: "id", autoIncrement: true });
-        }
     };
 
     // Evento de éxito: Se ejecuta cuando la conexión y estructura están completamente establecidas
@@ -162,22 +159,20 @@ export const dbReady = new Promise((resolve, reject) => {
             let datos = req_selects.result;
 
             // Listado secuencial de categorías y subsesiones del temporizador
-            let options = ["3x3 Session 1","3x3 Session 2", "3x3 Session 3",
-                 "3x3 OH Session 1", "3x3 OH Session 2", "3x3 OH Session 3", 
-                 "3x3 Blind Session 1", "3x3 Blind Session 2","3x3 Blind Session 3"];
+            
 
             // Validación de limpieza si faltan sesiones en el historial
-            if (datos.length > 0 && datos.length < options.length) {
+            if (datos.length > 0 && datos.length < categories_sessions.length) {
                 store_selects.clear();
                 datos = [];
             }
 
             // Si el almacén está limpio o incompleto, re-setea "3x3 Session 1" como activa por defecto
             if (datos.length === 0) {
-                for (let i = 0; i < options.length; i++) {
+                for (let i = 0; i < categories_sessions.length; i++) {
                     añadir_JSON(
                         {
-                            categoria: options[i],
+                            categoria: categories_sessions[i],
                             state: i === 0
                         },
                         "selects_db"
