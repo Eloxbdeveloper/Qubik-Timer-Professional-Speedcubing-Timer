@@ -1,11 +1,7 @@
-
 import { contenedor } from "../database/DB_render.js";
 
 // Selección de elementos interactivos del menú lateral o barra de navegación para el manejo de eventos
-const label_donate = document.querySelector(".label_donate");
-const instagram = document.querySelectorAll(".label_instagram");
-const facebook = document.querySelectorAll(".label_facebook");
-const github = document.querySelectorAll(".label_github");
+const donationButton = document.querySelector(".js-open-donation-modal");
 
 /**
  * Crea e inyecta dinámicamente un modal/overlay interactivo en el DOM para la sección de donaciones.
@@ -13,7 +9,6 @@ const github = document.querySelectorAll(".label_github");
  * y gestiona su propia destrucción al cerrar la interfaz.
  */
 export function createDonateOverlay() {
-
     // Capa de fondo oscura/translúcida que bloquea la interacción con el temporizador principal
     const overlay = document.createElement("div");
     overlay.classList.add("config-overlay", "donate-overlay");
@@ -97,19 +92,4 @@ export function createDonateOverlay() {
 // CONTROLADORES DE EVENTOS DE LA APLICACIÓN (LISTENERS):
 
 // Asigna el disparador del modal al botón o etiqueta correspondiente de donación
-label_donate.addEventListener("click", createDonateOverlay);
-
-// Redirección segura a la cuenta oficial de Instagram del proyecto en una nueva pestaña
-instagram[0].addEventListener("click", () => {
-    window.open("https://www.instagram.com/qubik.timer/", "_blank");
-});
-
-// Redirección segura a la página oficial de Facebook del proyecto en una nueva pestaña
-facebook[0].addEventListener("click", () => {
-    window.open("https://www.facebook.com/profile.php?id=61573262690471", "_blank");
-});
-
-// Redirección segura al repositorio de código fuente del ecosistema en GitHub
-github[0].addEventListener("click", () => {
-    window.open("https://github.com/Eloxbdeveloper/Qubik-Timer-Professional-Speedcubing-Timer", "_blank");
-});
+donationButton.addEventListener("click", createDonateOverlay);
