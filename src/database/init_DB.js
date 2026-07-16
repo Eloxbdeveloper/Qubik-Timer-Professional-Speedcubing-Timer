@@ -3,7 +3,7 @@ import { dataDiv } from "./DB_render.js";
 import { checkDBProm } from "./average_DB.js";
 import { crearPromedios } from "../averages/average_render.js";
 import { checkManualInput } from "../configuration/configuration_render.js";
-import { sincronizarSelectConDB } from "../sessions/sessions.js"
+import { sincronizarSelectConDB } from "../sessions/sessions.js";
 
 const contenedor = document.querySelector(".contenedor");
 
@@ -12,7 +12,6 @@ export let db;
 
 // Promesa global para controlar la asincronía y asegurar que la base de datos esté lista antes de operar
 export const dbReady = new Promise((resolve, reject) => {
-
     // Abre la base de datos "registros". Versión 12 (requerida para disparar onupgradeneeded si cambia la estructura)
     const request = indexedDB.open("registros", 12);
 
@@ -22,56 +21,92 @@ export const dbReady = new Promise((resolve, reject) => {
 
         // --- Creación de Object Stores para Solves (Categoría: 3x3 normal) ---
         if (!db.objectStoreNames.contains("cube3x3")) {
-            db.createObjectStore("cube3x3", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("cube3x3", {
+                keyPath: "id",
+                autoIncrement: true,
+            });
         }
 
         if (!db.objectStoreNames.contains("cube3x3_session2")) {
-            db.createObjectStore("cube3x3_session2", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("cube3x3_session2", {
+                keyPath: "id",
+                autoIncrement: true,
+            });
         }
 
         if (!db.objectStoreNames.contains("cube3x3_session3")) {
-            db.createObjectStore("cube3x3_session3", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("cube3x3_session3", {
+                keyPath: "id",
+                autoIncrement: true,
+            });
         }
 
         // --- Almacén para Historial de Promedios y Estadísticas (Mo3, Ao5, Ao12...) ---
         if (!db.objectStoreNames.contains("promDB")) {
-            db.createObjectStore("promDB", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("promDB", {
+                keyPath: "id",
+                autoIncrement: true,
+            });
         }
 
         // --- Almacén para Configuraciones de la App (Inspección, Ocultar Tiempos...) ---
         if (!db.objectStoreNames.contains("configDB")) {
-            db.createObjectStore("configDB", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("configDB", {
+                keyPath: "id",
+                autoIncrement: true,
+            });
         }
 
         // --- Almacén para el Estado Activo de las Categorías/Sesiones en los selectores ---
         if (!db.objectStoreNames.contains("selects_db")) {
-            db.createObjectStore("selects_db", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("selects_db", {
+                keyPath: "id",
+                autoIncrement: true,
+            });
         }
 
         // --- Creación de Object Stores para Solves (Categoría: 3x3 One-Handed) ---
         if (!db.objectStoreNames.contains("cube3x3_oh")) {
-            db.createObjectStore("cube3x3_oh", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("cube3x3_oh", {
+                keyPath: "id",
+                autoIncrement: true,
+            });
         }
 
         if (!db.objectStoreNames.contains("cube3x3_oh_session2")) {
-            db.createObjectStore("cube3x3_oh_session2", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("cube3x3_oh_session2", {
+                keyPath: "id",
+                autoIncrement: true,
+            });
         }
 
         if (!db.objectStoreNames.contains("cube3x3_oh_session3")) {
-            db.createObjectStore("cube3x3_oh_session3", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("cube3x3_oh_session3", {
+                keyPath: "id",
+                autoIncrement: true,
+            });
         }
 
         // --- Creación de Object Stores para Solves (Categoría: 3x3 Blindfolded) ---
         if (!db.objectStoreNames.contains("cube3x3_blind")) {
-            db.createObjectStore("cube3x3_blind", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("cube3x3_blind", {
+                keyPath: "id",
+                autoIncrement: true,
+            });
         }
 
         if (!db.objectStoreNames.contains("cube3x3_blind_session2")) {
-            db.createObjectStore("cube3x3_blind_session2", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("cube3x3_blind_session2", {
+                keyPath: "id",
+                autoIncrement: true,
+            });
         }
 
         if (!db.objectStoreNames.contains("cube3x3_blind_session3")) {
-            db.createObjectStore("cube3x3_blind_session3", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("cube3x3_blind_session3", {
+                keyPath: "id",
+                autoIncrement: true,
+            });
         }
     };
 
@@ -79,10 +114,8 @@ export const dbReady = new Promise((resolve, reject) => {
     request.onsuccess = function (e) {
         db = e.target.result;
 
-
-
         // ===== CARGA INICIAL Y POBLADO POR DEFECTO =====
-        
+
         // Verifica si la propiedad de ingreso manual de tiempos está activa en los ajustes
         checkManualInput();
 
@@ -111,10 +144,7 @@ export const dbReady = new Promise((resolve, reject) => {
             // Si el almacén está vacío, inyecta la estructura completa
             if (datos.length === 0) {
                 for (let i = 0; i < medias.length; i++) {
-                    añadir_JSON(
-                        { actual: true, stats: medias[i] },
-                        "promDB"
-                    );
+                    añadir_JSON({ actual: true, stats: medias[i] }, "promDB");
                 }
             }
 
@@ -131,7 +161,11 @@ export const dbReady = new Promise((resolve, reject) => {
 
         req_config.onsuccess = () => {
             let datos = req_config.result;
-            let configurations = ["inspeccion", "ocultarTiempo", "ingresoManual"];
+            let configurations = [
+                "inspeccion",
+                "ocultarTiempo",
+                "ingresoManual",
+            ];
 
             // Validación de limpieza si faltan configuraciones
             if (datos.length > 0 && datos.length < configurations.length) {
@@ -145,9 +179,9 @@ export const dbReady = new Promise((resolve, reject) => {
                     añadir_JSON(
                         {
                             configuration: configurations[i],
-                            state: false
+                            state: false,
                         },
-                        "configDB"
+                        "configDB",
                     );
                 }
             }
@@ -162,9 +196,17 @@ export const dbReady = new Promise((resolve, reject) => {
             let datos = req_selects.result;
 
             // Listado secuencial de categorías y subsesiones del temporizador
-            let options = ["3x3 Session 1","3x3 Session 2", "3x3 Session 3",
-                 "3x3 OH Session 1", "3x3 OH Session 2", "3x3 OH Session 3", 
-                 "3x3 Blind Session 1", "3x3 Blind Session 2","3x3 Blind Session 3"];
+            let options = [
+                "3x3 Session 1",
+                "3x3 Session 2",
+                "3x3 Session 3",
+                "3x3 OH Session 1",
+                "3x3 OH Session 2",
+                "3x3 OH Session 3",
+                "3x3 Blind Session 1",
+                "3x3 Blind Session 2",
+                "3x3 Blind Session 3",
+            ];
 
             // Validación de limpieza si faltan sesiones en el historial
             if (datos.length > 0 && datos.length < options.length) {
@@ -178,16 +220,16 @@ export const dbReady = new Promise((resolve, reject) => {
                     añadir_JSON(
                         {
                             categoria: options[i],
-                            state: i === 0
+                            state: i === 0,
                         },
-                        "selects_db"
+                        "selects_db",
                     );
                 }
             }
         };
 
         // Sincroniza visualmente los menús desplegables (<select>) basándose en el estado guardado
-        sincronizarSelectConDB()
+        sincronizarSelectConDB();
 
         // Resuelve exitosamente la promesa general entregando la instancia de la base de datos lista
         resolve(db);
