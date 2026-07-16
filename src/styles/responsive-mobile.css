@@ -148,8 +148,7 @@
     }
 
     /* Overlay oscuro detras del sidebar */
-    .contenedor.nav-open::after {
-        content: "";
+    .nav-overlay {
         position: fixed;
         inset: 0;
         background: rgba(0, 0, 0, 0.6);

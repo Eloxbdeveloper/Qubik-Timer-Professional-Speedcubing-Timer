@@ -53,20 +53,25 @@ window.addEventListener("DOMContentLoaded", () => {
     const statsInline = document.querySelector(".stats-inline");
 
     // --- Hamburger: toggle sidebar off-canvas ---
+    function openNav() {
+        navBar?.classList.add("open");
+        contenedor?.classList.add("nav-open");
+        const overlay = document.createElement("div");
+        overlay.classList.add("nav-overlay");
+        overlay.addEventListener("click", closeNav);
+        contenedor?.appendChild(overlay);
+    }
+
+    function closeNav() {
+        navBar?.classList.remove("open");
+        contenedor?.classList.remove("nav-open");
+        contenedor?.querySelector(".nav-overlay")?.remove();
+    }
+
     hamburgerBtn?.addEventListener("click", (e) => {
         e.stopPropagation();
-        navBar?.classList.toggle("open");
-        contenedor?.classList.toggle("nav-open");
-    });
-
-    // --- Cerrar sidebar al hacer clic fuera de ella ---
-    contenedor?.addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (!navBar?.classList.contains("open")) return;
-        if (!navBar.contains(e.target)) {
-            navBar.classList.remove("open");
-            contenedor.classList.remove("nav-open");
-        }
+        if (navBar?.classList.contains("open")) closeNav();
+        else openNav();
     });
 
     // --- Bottom Sheet A (times) ---

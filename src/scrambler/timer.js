@@ -420,6 +420,7 @@ export function eventosTimer() {
 
     touchZone.addEventListener("touchend", (e) => {
         if (
+            contenedor.classList.contains("nav-open") ||
             isEditable ||
             manualState ||
             isInteractive(e.target) ||
