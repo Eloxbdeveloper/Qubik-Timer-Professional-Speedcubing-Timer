@@ -24,7 +24,12 @@ body {
     overflow: hidden;
 
     /* Fondo degradado radial que simula iluminación superior */
-    background: radial-gradient(circle at top, #2a2a2a 0%, #1a1a1a 35%, #101010 100%);
+    background: radial-gradient(
+        circle at top,
+        #2a2a2a 0%,
+        #1a1a1a 35%,
+        #101010 100%
+    );
 
     color: #f1f1f1;
     font-family: "Inter", sans-serif;
@@ -49,7 +54,7 @@ body {
  * Oculto por defecto en la disposición de escritorio (Desktop-first).
  */
 .mobile {
-     display: none;
+    display: none;
 }
 
 /**
@@ -60,10 +65,15 @@ body {
 .ocultar {
     display: none;
     position: absolute;
-    z-index: 2; 
+    z-index: 2;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at top, #2a2a2a 0%, #1a1a1a 35%, #101010 100%);
+    background: radial-gradient(
+        circle at top,
+        #2a2a2a 0%,
+        #1a1a1a 35%,
+        #101010 100%
+    );
 }
 
 /**
@@ -72,10 +82,12 @@ body {
  * Se implementa 'visibility' junto con 'opacity' para evitar colisiones de clics con elementos subyacentes.
  */
 .ocultar {
-  display: flex;                             /* Asegura que el layout interno permanezca activo */
-  opacity: 0;                                /* Ocultación visual */
-  visibility: hidden;                        /* Ocultación funcional (elimina interactividad y puntero) */
-  transition: opacity 0.35s ease, visibility 0.35s ease; /* Desvanecimiento suave bidireccional */
+    display: flex; /* Asegura que el layout interno permanezca activo */
+    opacity: 0; /* Ocultación visual */
+    visibility: hidden; /* Ocultación funcional (elimina interactividad y puntero) */
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease; /* Desvanecimiento suave bidireccional */
 }
 
 /**
@@ -83,8 +95,8 @@ body {
  * Rompe la ocultación base mediante transiciones. Activado mediante JavaScript.
  */
 .ocultar.activo {
-  opacity: 1;                                /* Visibilidad total */
-  visibility: visible;                       /* Restaura la interactividad */
+    opacity: 1; /* Visibilidad total */
+    visibility: visible; /* Restaura la interactividad */
 }
 
 /**
@@ -101,4 +113,12 @@ body {
     padding: 7px 12px;
     position: absolute;
     right: 4px;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    vertical-align: middle;
+    flex-shrink: 0;
 }

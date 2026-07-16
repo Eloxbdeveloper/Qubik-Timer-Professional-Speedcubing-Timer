@@ -17,7 +17,7 @@ const ASSETS = [
     "/src/database/DB_render.js",
     "/src/database/init_DB.js",
     "/src/database/stats_render.js",
-    "/src/images/icon.png",
+    "/src/images/icon_mobile.png",
     "/src/images/logo.png",
     "/src/images/banner.png",
     "/src/images/breb.jpeg",

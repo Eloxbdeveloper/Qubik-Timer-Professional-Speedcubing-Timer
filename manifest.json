@@ -12,12 +12,12 @@
     "lang": "en-US",
     "icons": [
         {
-            "src": "/src/images/logo.png",
+            "src": "/src/images/icon_mobile.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/src/images/logo.png",
+            "src": "/src/images/icon_mobile.png",
             "sizes": "512x512",
             "type": "image/png"
         }

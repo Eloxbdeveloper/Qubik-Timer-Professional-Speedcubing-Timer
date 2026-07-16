@@ -141,11 +141,11 @@
 }
 
 /**
- * Estilos dedicados para la fuente de símbolos Material Symbols (Google).
- * - Limpia los valores nativos de herencia de botones e inputs.
- * - Deshabilita la selección de texto para evitar distorsiones en clics repetitivos.
+ * Estilos para los iconos SVG del sprite.
+ * - Hereda color del padre vía currentColor.
+ * - Tamaño controlado por font-size (1em = font-size del padre).
  */
-.navbar__item .material-symbols-outlined {
+.navbar__item .icon {
     background: transparent;
     border: none;
     outline: none;
@@ -161,7 +161,7 @@
     user-select: none;
 }
 
-.navbar__item:hover .material-symbols-outlined {
+.navbar__item:hover .icon {
     color: #ffffff;
 }
 

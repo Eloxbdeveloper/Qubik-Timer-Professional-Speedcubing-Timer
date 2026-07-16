@@ -138,7 +138,7 @@
     }
 
     .navbar__item ion-icon,
-    .navbar__item .material-symbols-outlined {
+    .navbar__item .icon {
         font-size: 22px;
         min-width: 22px;
     }
