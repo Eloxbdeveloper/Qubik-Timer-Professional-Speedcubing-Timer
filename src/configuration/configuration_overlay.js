@@ -9,6 +9,12 @@ const donationButton = document.querySelector(".js-open-donation-modal");
  * y gestiona su propia destrucción al cerrar la interfaz.
  */
 export function createDonateOverlay() {
+    const donateOverlayExists = contenedor.querySelector(".donate-overlay");
+    const configOverlayExists = contenedor.querySelector(
+        ".config-overlay:not(.donate-overlay)",
+    );
+    if (configOverlayExists) configOverlayExists.remove();
+    if (donateOverlayExists) return;
     // Capa de fondo oscura/translúcida que bloquea la interacción con el temporizador principal
     const overlay = document.createElement("div");
     overlay.classList.add("config-overlay", "donate-overlay");
@@ -83,6 +89,11 @@ export function createDonateOverlay() {
     overlay.appendChild(card);
     contenedor.appendChild(overlay);
 
+    overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+            overlay.remove();
+        }
+    });
     // Despachador de evento de cierre: Remueve por completo el overlay del árbol de nodos para liberar memoria
     btnClose.addEventListener("click", () => {
         overlay.remove();

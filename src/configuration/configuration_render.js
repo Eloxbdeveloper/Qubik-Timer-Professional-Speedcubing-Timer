@@ -12,6 +12,13 @@ const settingsButton = document.querySelector(".js-open-settings-modal");
  * y gestiona los cambios de estado visual y lógico del temporizador.
  */
 export function createConfigOverlay() {
+    const donateOverlayExists = contenedor.querySelector(".donate-overlay");
+    const configOverlayExists = contenedor.querySelector(
+        ".config-overlay:not(.donate-overlay)",
+    );
+    if (donateOverlayExists) donateOverlayExists.remove();
+    if (configOverlayExists) return;
+
     // Capa de fondo oscura translúcida que aísla la vista de configuración
     const overlay = document.createElement("div");
     overlay.classList.add("config-overlay");
@@ -168,6 +175,11 @@ export function createConfigOverlay() {
     overlay.appendChild(card);
     contenedor.appendChild(overlay);
 
+    overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+            overlay.remove();
+        }
+    });
     // Destructor del modal: Remueve el árbol de nodos completo para evitar fugas de memoria (Memory Leaks)
     btnClose.addEventListener("click", () => {
         overlay.remove();
