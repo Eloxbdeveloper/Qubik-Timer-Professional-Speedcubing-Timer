@@ -2,6 +2,7 @@ import { menuScramble, isEditable } from "./render.js";
 import { añadir } from "../database/crud.js";
 import { arrayInfo } from "../solves/solve_factory.js";
 import { dbReady } from "../database/init_DB.js";
+import { contenedor } from "../database/DB_render.js";
 
 // Captura de nodos clave de la UI interactiva del timer
 export const cronometro = document.querySelector(".time");
@@ -172,8 +173,7 @@ export function eventosTimer() {
             cronometro.textContent = rawTime.toFixed(2);
             inicio = null;
 
-            if (ocultar_elementos)
-                ocultar_elementos.classList.remove("activo");
+            if (ocultar_elementos) ocultar_elementos.classList.remove("activo");
 
             const data = arrayInfo();
             if (data) añadir(data);
@@ -202,8 +202,7 @@ export function eventosTimer() {
             isArmed = true;
 
             cronometro.style.color = "red";
-            if (ocultar_elementos)
-                ocultar_elementos.classList.add("activo");
+            if (ocultar_elementos) ocultar_elementos.classList.add("activo");
 
             const verificar = setInterval(() => {
                 const duracion = Date.now() - presionInicio;
@@ -225,7 +224,7 @@ export function eventosTimer() {
 
     document.addEventListener("keydown", (e) => {
         // Si la edición manual externa está activa en el menú superior, cancela la lógica de arranque
-        if (isEditable) return;
+        if (isEditable || contenedor.classList.contains("nav-open")) return;
 
         // Cortafuegos secundario para campos editables ajenos a la lógica del cronómetro
         const esInput =
@@ -360,8 +359,7 @@ export function eventosTimer() {
         if (isArmed && !corriendo) {
             cronometro.style.color = "#f5f5f5";
             isArmed = false;
-            if (ocultar_elementos)
-                ocultar_elementos.classList.remove("activo");
+            if (ocultar_elementos) ocultar_elementos.classList.remove("activo");
         }
 
         presionado = false;
@@ -395,7 +393,7 @@ export function eventosTimer() {
 
     function isInteractive(el) {
         return el.closest(
-            "button, select, textarea, input, .fila_front, .promedios, .nav_bar, .hamburger-btn, .stats-inline, .sheet-handle--stats, .overlay_card, .config-overlay",
+            "button, select, textarea, input, .fila_front, .navbar, .promedios, .hamburger-btn, .stats-inline, .sheet-handle--stats, .overlay_card, .config-overlay",
         );
     }
 
@@ -408,6 +406,7 @@ export function eventosTimer() {
 
     touchZone.addEventListener("touchstart", (e) => {
         if (
+            contenedor.classList.contains("nav-open") ||
             isEditable ||
             manualState ||
             isInteractive(e.target) ||
@@ -420,7 +419,12 @@ export function eventosTimer() {
     });
 
     touchZone.addEventListener("touchend", (e) => {
-        if (isEditable || manualState || isInteractive(e.target) || sheetIsOpen())
+        if (
+            isEditable ||
+            manualState ||
+            isInteractive(e.target) ||
+            sheetIsOpen()
+        )
             return;
         e.preventDefault();
         handleRelease();

@@ -1,6 +1,6 @@
 import { leer } from "../database/crud.js";
 import { dataDiv } from "../database/DB_render.js";
-import { checkManualInput } from "../configuration/configuration_render.js";
+import { checkManualInput } from "../configuration/create_config_overlay.js";
 
 /*
  Función global que se ejecuta cuando la base de datos

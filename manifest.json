@@ -2,7 +2,7 @@
     "name": "Qubik Timer",
     "short_name": "Qubik Timer",
     "description": "Professional Speedcubing Timer",
-    "id": "https://qubiktimer.com/",
+    "id": "/",
     "start_url": "/",
     "scope": "/",
     "display": "standalone",

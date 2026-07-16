@@ -61,8 +61,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // --- Cerrar sidebar al hacer clic fuera de ella ---
     contenedor?.addEventListener("click", (e) => {
+        e.stopPropagation();
         if (!navBar?.classList.contains("open")) return;
-        if (!navBar.contains(e.target) && !hamburgerBtn?.contains(e.target)) {
+        if (!navBar.contains(e.target)) {
             navBar.classList.remove("open");
             contenedor.classList.remove("nav-open");
         }

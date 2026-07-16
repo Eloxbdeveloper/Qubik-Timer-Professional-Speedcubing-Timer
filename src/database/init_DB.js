@@ -2,7 +2,7 @@ import { leer, añadir_JSON } from "./crud.js";
 import { dataDiv } from "./DB_render.js";
 import { checkDBProm } from "./average_DB.js";
 import { crearPromedios } from "../averages/average_render.js";
-import { checkManualInput } from "../configuration/configuration_render.js";
+import { checkManualInput } from "../configuration/create_config_overlay.js";
 import { sincronizarSelectConDB } from "../sessions/sessions.js";
 
 const contenedor = document.querySelector(".contenedor");
