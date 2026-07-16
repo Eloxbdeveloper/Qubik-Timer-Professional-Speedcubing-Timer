@@ -1,303 +1,355 @@
 <!doctype html>
 <html lang="en" translate="no">
-  <head>
-    <!-- Google tag (gtag.js) segundo repo-->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-PW48J3HL7L"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
+    <head>
+        <!-- Google tag (gtag.js) segundo repo-->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-PW48J3HL7L"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
 
-      gtag("config", "G-PW48J3HL7L");
-    </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Qubik Timer – Speedcubing Timer Online</title>
+            gtag("config", "G-PW48J3HL7L");
+        </script>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Qubik Timer – Speedcubing Timer Online</title>
 
-    <meta
-      name="description"
-      content="Qubik Timer is a speedcubing timer for the cubing community, built to practice 3x3 solves with fast scrambles and real-time timing to improve your speed and consistency online."
-    />
-    <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#0f0f0f" />
-    <link rel="canonical" href="https://qubiktimer.com/" />
-
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:title"
-      content="Qubik Timer – Speedcubing Timer Online"
-    />
-    <meta
-      property="og:description"
-      content="Practice speedcubing with fast scrambles and real-time timing. Improve your 3x3 solves with Qubik Timer, built for the cubing community."
-    />
-    <meta property="og:url" content="https://qubiktimer.com/" />
-    <meta
-      property="og:image"
-      content="https://qubiktimer.com/src/Images/preview.png"
-    />
-    <meta property="og:site_name" content="Qubik Timer" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="Qubik Timer – Speedcubing Timer Online"
-    />
-    <meta
-      name="twitter:description"
-      content="Practice speedcubing with fast scrambles and real-time timing. Improve your 3x3 solves with Qubik Timer."
-    />
-    <meta
-      name="twitter:image"
-      content="https://qubiktimer.com/src/Images/preview.png"
-    />
-
-    <meta name="application-name" content="Qubik Timer" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Qubik Timer" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-
-    <link rel="icon" href="./src/Images/icon.png" type="image/png" />
-    <link rel="stylesheet" href="src/styles/main.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-    />
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Qubik Timer",
-        "url": "https://qubiktimer.com/",
-        "description": "Speedcubing timer for 3x3 practice with scrambles and real-time timing.",
-        "applicationCategory": "BrowserApplication",
-        "operatingSystem": "All",
-        "image": "https://qubiktimer.com/src/Images/preview.png",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "featureList": [
-          "Speedcubing timer",
-          "Automatic scrambles",
-          "Real-time timing",
-          "3x3 practice tool"
-        ]
-      }
-    </script>
-  </head>
-  <body>
-    <div class="contenedor">
-        
-        <div class="ocultar"></div>
-
-        <button class="hamburger-btn" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
-      <nav class="navbar">
-        <div class="navbar__logo"></div>
-        <ul class="navbar__list">
-          <li class="navbar__item">
-            <a
-              href="https://www.instagram.com/qubik.timer/"
-              class="navbar__link navbar__link--social"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ion-icon name="logo-instagram" class="navbar__icon"></ion-icon>
-              <span class="navbar__label">Instagram</span>
-            </a>
-          </li>
-          <li class="navbar__item">
-            <a
-              href="https://www.facebook.com/profile.php?id=61573262690471"
-              class="navbar__link navbar__link--social"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ion-icon name="logo-facebook" class="navbar__icon"></ion-icon>
-              <span class="navbar__label">Facebook</span>
-            </a>
-          </li>
-          <li class="navbar__item">
-            <a
-              href="https://github.com/Eloxbdeveloper/Qubik-Timer-Professional-Speedcubing-Timer"
-              class="navbar__link navbar__link--social"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ion-icon name="logo-github" class="navbar__icon"></ion-icon>
-              <span class="navbar__label">GitHub</span>
-            </a>
-          </li>
-
-          <li class="navbar__item">
-            <button
-              class="navbar__button js-open-donation-modal"
-              aria-label="Donate"
-            >
-              <span class="material-symbols-outlined navbar__icon"
-                >volunteer_activism</span
-              >
-              <span class="navbar__label">Donate</span>
-            </button>
-          </li>
-
-          <li class="navbar__item">
-            <button
-              class="navbar__button js-open-settings-modal"
-              aria-label="Settings"
-            >
-              <span class="material-symbols-outlined navbar__icon"
-                >settings</span
-              >
-              <span class="navbar__label">Settings</span>
-            </button>
-          </li>
-        </ul>
-      </nav>
-
-      <div class="selects_category">
-        <select class="select_categoria" aria-label="Select Category">
-          <option value="3x3" class="option">3x3</option>
-          <option value="3x3 OH" class="option">3x3 One Handed</option>
-          <option value="3x3 Blind" class="option">3x3 Blindfolded</option>
-          <option value="Coming Soon" class="option" disabled>
-            Coming Soon...
-          </option>
-        </select>
-
-            <select class="select_sesiones" aria-label="Select Session">
-                <option value="Session 1" class="option">Session 1</option>
-                <option value="Session 2" class="option">Session 2</option>
-                <option value="Session 3" class="option">Session 3</option>
-            </select>
-        </div>
-        
-        <div class="scramble-menu">
-            
-            <div class="scramble-header">
-                <textarea class="notacion" readonly aria-label="WCA Scramble Text"></textarea>
-    
-                <div class="botones">
-                    <button class="material-symbols-outlined btn2" title="Refresh" aria-label="Refresh Scramble">refresh</button>
-                    <button class="material-symbols-outlined btn2" title="Edit" aria-label="Edit Scramble Manually">edit</button>
-                    <button class="material-symbols-outlined btn2" title="Copy" aria-label="Copy Scramble">content_copy</button>
-                </div>
-            </div>
-
-        <p class="time">0.00</p>
-        <input
-          type="text"
-          class="manually_times"
-          aria-label="Input time manually"
+        <meta
+            name="description"
+            content="Qubik Timer is a speedcubing timer for the cubing community, built to practice 3x3 solves with fast scrambles and real-time timing to improve your speed and consistency online."
         />
-      </div>
+        <meta name="robots" content="index, follow" />
+        <meta name="theme-color" content="#0f0f0f" />
+        <link rel="canonical" href="https://qubiktimer.com/" />
 
-        <div class="cube-stats-row">
-            <div class="cubo"></div>
-            <div class="stats-inline">
-                <div class="quick-stat" data-type="best">
-                    <span class="quick-stat-label">Best</span>
-                    <span class="quick-stat-value">--</span>
+        <meta property="og:type" content="website" />
+        <meta
+            property="og:title"
+            content="Qubik Timer – Speedcubing Timer Online"
+        />
+        <meta
+            property="og:description"
+            content="Practice speedcubing with fast scrambles and real-time timing. Improve your 3x3 solves with Qubik Timer, built for the cubing community."
+        />
+        <meta property="og:url" content="https://qubiktimer.com/" />
+        <meta
+            property="og:image"
+            content="https://qubiktimer.com/src/Images/preview.png"
+        />
+        <meta property="og:site_name" content="Qubik Timer" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+            name="twitter:title"
+            content="Qubik Timer – Speedcubing Timer Online"
+        />
+        <meta
+            name="twitter:description"
+            content="Practice speedcubing with fast scrambles and real-time timing. Improve your 3x3 solves with Qubik Timer."
+        />
+        <meta
+            name="twitter:image"
+            content="https://qubiktimer.com/src/Images/preview.png"
+        />
+
+        <meta name="application-name" content="Qubik Timer" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="Qubik Timer" />
+        <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
+        />
+
+        <link rel="icon" href="./src/images/icon.png" type="image/png" />
+        <link rel="stylesheet" href="./src/styles/main.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="manifest" href="manifest.json" />
+
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                "name": "Qubik Timer",
+                "url": "https://qubiktimer.com/",
+                "description": "Speedcubing timer for 3x3 practice with scrambles and real-time timing.",
+                "applicationCategory": "BrowserApplication",
+                "operatingSystem": "All",
+                "image": "https://qubiktimer.com/src/Images/preview.png",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                },
+                "featureList": [
+                    "Speedcubing timer",
+                    "Automatic scrambles",
+                    "Real-time timing",
+                    "3x3 practice tool"
+                ]
+            }
+        </script>
+    </head>
+    <body>
+        <div class="contenedor">
+            <div class="ocultar"></div>
+
+            <button class="hamburger-btn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="navbar">
+                <div class="navbar__logo"></div>
+                <ul class="navbar__list">
+                    <li class="navbar__item">
+                        <a
+                            href="https://www.instagram.com/qubik.timer/"
+                            class="navbar__link navbar__link--social"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <ion-icon
+                                name="logo-instagram"
+                                class="navbar__icon"
+                            ></ion-icon>
+                            <span class="navbar__label">Instagram</span>
+                        </a>
+                    </li>
+                    <li class="navbar__item">
+                        <a
+                            href="https://www.facebook.com/profile.php?id=61573262690471"
+                            class="navbar__link navbar__link--social"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <ion-icon
+                                name="logo-facebook"
+                                class="navbar__icon"
+                            ></ion-icon>
+                            <span class="navbar__label">Facebook</span>
+                        </a>
+                    </li>
+                    <li class="navbar__item">
+                        <a
+                            href="https://github.com/Eloxbdeveloper/Qubik-Timer-Professional-Speedcubing-Timer"
+                            class="navbar__link navbar__link--social"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <ion-icon
+                                name="logo-github"
+                                class="navbar__icon"
+                            ></ion-icon>
+                            <span class="navbar__label">GitHub</span>
+                        </a>
+                    </li>
+
+                    <li class="navbar__item">
+                        <button
+                            class="navbar__button js-open-donation-modal"
+                            aria-label="Donate"
+                        >
+                            <span class="material-symbols-outlined navbar__icon"
+                                ><img
+                                    src="/src/images/icons/volunteer_activism.svg"
+                                />
+                            </span>
+                            <span class="navbar__label">Donate</span>
+                        </button>
+                    </li>
+
+                    <li class="navbar__item">
+                        <button
+                            class="navbar__button js-open-settings-modal"
+                            aria-label="Settings"
+                        >
+                            <span class="material-symbols-outlined navbar__icon"
+                                >settings</span
+                            >
+                            <span class="navbar__label">Settings</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="selects_category">
+                <select class="select_categoria" aria-label="Select Category">
+                    <option value="3x3" class="option">3x3</option>
+                    <option value="3x3 OH" class="option">
+                        3x3 One Handed
+                    </option>
+                    <option value="3x3 Blind" class="option">
+                        3x3 Blindfolded
+                    </option>
+                    <option value="Coming Soon" class="option" disabled>
+                        Coming Soon...
+                    </option>
+                </select>
+
+                <select class="select_sesiones" aria-label="Select Session">
+                    <option value="Session 1" class="option">Session 1</option>
+                    <option value="Session 2" class="option">Session 2</option>
+                    <option value="Session 3" class="option">Session 3</option>
+                </select>
+            </div>
+
+            <div class="scramble-menu">
+                <div class="scramble-header">
+                    <textarea
+                        class="notacion"
+                        readonly
+                        aria-label="WCA Scramble Text"
+                    ></textarea>
+
+                    <div class="botones">
+                        <button
+                            class="material-symbols-outlined btn2"
+                            title="Refresh"
+                            aria-label="Refresh Scramble"
+                        >
+                            refresh
+                        </button>
+                        <button
+                            class="material-symbols-outlined btn2"
+                            title="Edit"
+                            aria-label="Edit Scramble Manually"
+                        >
+                            edit
+                        </button>
+                        <button
+                            class="material-symbols-outlined btn2"
+                            title="Copy"
+                            aria-label="Copy Scramble"
+                        >
+                            content_copy
+                        </button>
+                    </div>
                 </div>
-                <div class="quick-stat" data-type="actual">
-                    <span class="quick-stat-label">Actual</span>
-                    <span class="quick-stat-value">--</span>
+
+                <p class="time">0.00</p>
+                <input
+                    type="text"
+                    class="manually_times"
+                    aria-label="Input time manually"
+                />
+            </div>
+
+            <div class="cube-stats-row">
+                <div class="cubo"></div>
+                <div class="stats-inline">
+                    <div class="quick-stat" data-type="best">
+                        <span class="quick-stat-label">Best</span>
+                        <span class="quick-stat-value">--</span>
+                    </div>
+                    <div class="quick-stat" data-type="actual">
+                        <span class="quick-stat-label">Actual</span>
+                        <span class="quick-stat-value">--</span>
+                    </div>
+                    <div class="quick-stat" data-type="mo3">
+                        <span class="quick-stat-label">Mo3</span>
+                        <span class="quick-stat-value">--</span>
+                    </div>
+                    <div class="quick-stat" data-type="ao5">
+                        <span class="quick-stat-label">Ao5</span>
+                        <span class="quick-stat-value">--</span>
+                    </div>
+                    <div class="quick-stat" data-type="ao12">
+                        <span class="quick-stat-label">Ao12</span>
+                        <span class="quick-stat-value">--</span>
+                    </div>
                 </div>
-                <div class="quick-stat" data-type="mo3">
-                    <span class="quick-stat-label">Mo3</span>
-                    <span class="quick-stat-value">--</span>
+            </div>
+
+            <div class="fila_front">
+                <div class="contenedor_data">
+                    <div class="archivador"></div>
                 </div>
-                <div class="quick-stat" data-type="ao5">
-                    <span class="quick-stat-label">Ao5</span>
-                    <span class="quick-stat-value">--</span>
-                </div>
-                <div class="quick-stat" data-type="ao12">
-                    <span class="quick-stat-label">Ao12</span>
-                    <span class="quick-stat-value">--</span>
+
+                <div class="promedios"></div>
+            </div>
+        </div>
+
+        <div class="mobile">
+            <div class="overlay_card">
+                <div class="mobile-card">
+                    <div class="banner-mobile"></div>
+
+                    <span class="material-symbols-outlined mobile-icon"
+                        >smartphone</span
+                    >
+
+                    <h1 class="title_mobile">Mobile Version Not Available</h1>
+
+                    <p class="text_mobile">
+                        Qubik Timer is currently available only for desktop
+                        devices.
+                    </p>
+
+                    <div class="mobile-info">
+                        <p>Minimum supported resolution</p>
+                        <span>1024 × 512</span>
+                    </div>
+
+                    <p class="text_mobile secondary">
+                        If you are using a computer and are still seeing this
+                        screen, try reducing the browser zoom level or putting
+                        the browser window in full screen.
+                    </p>
+
+                    <div class="mobile-footer">
+                        Mobile & Tablet Support Coming Soon
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="fila_front">
-            
-            <div class="contenedor_data">
-                <div class="archivador"></div>
-            </div>
-            
-            <div class="promedios"></div>
 
-         </div>
-    </div>
+        <script src="./src/scrambler/scrambler_main.js" type="module"></script>
 
-    <div class="mobile">
-      <div class="overlay_card">
-        <div class="mobile-card">
-          <div class="banner-mobile"></div>
+        <script type="module" src="./src/core/main.js"></script>
+        <script
+            type="module"
+            src="./src/configuration/configuration_render.js"
+        ></script>
+        <script
+            type="module"
+            src="./src/configuration/configuration_overlay.js"
+        ></script>
+        <script type="module" src="./src/sessions/sessions.js"></script>
 
-          <span class="material-symbols-outlined mobile-icon">smartphone</span>
-
-          <h1 class="title_mobile">Mobile Version Not Available</h1>
-
-          <p class="text_mobile">
-            Qubik Timer is currently available only for desktop devices.
-          </p>
-
-          <div class="mobile-info">
-            <p>Minimum supported resolution</p>
-            <span>1024 × 512</span>
-          </div>
-
-          <p class="text_mobile secondary">
-            If you are using a computer and are still seeing this screen, try
-            reducing the browser zoom level or putting the browser window in
-            full screen.
-          </p>
-
-          <div class="mobile-footer">Mobile & Tablet Support Coming Soon</div>
-        </div>
-      </div>
-    </div>
-
-    <script src="./src/scrambler/scrambler_main.js" type="module"></script>
-
-    <script type="module" src="./src/core/main.js"></script>
-    <script
-      type="module"
-      src="./src/configuration/configuration_render.js"
-    ></script>
-    <script
-      type="module"
-      src="./src/configuration/configuration_overlay.js"
-    ></script>
-    <script type="module" src="./src/sessions/sessions.js"></script>
-
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-    ></script>
-  </body>
+        <script>
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", async () => {
+                    try {
+                        await navigator.serviceWorker.register("/sw.js", {
+                            scope: "/",
+                        });
+                        console.log("Service Worker registrado.");
+                    } catch (error) {
+                        console.error(
+                            "Error registrando el Service Worker:",
+                            error,
+                        );
+                    }
+                });
+            }
+        </script>
+        <script
+            type="module"
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+        ></script>
+        <script
+            nomodule
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+        ></script>
+    </body>
 </html>

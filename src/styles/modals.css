@@ -18,7 +18,7 @@
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(6px);
 
-    z-index: 3; 
+    z-index: 3;
 }
 
 /* ==========================================================================
@@ -47,8 +47,8 @@
 
     /* Profundidad y relieve interior */
     box-shadow:
-        0 0 30px rgba(0, 0, 0, .5),
-        inset 0 0 20px rgba(255, 255, 255, .02);
+        0 0 30px rgba(0, 0, 0, 0.5),
+        inset 0 0 20px rgba(255, 255, 255, 0.02);
 }
 
 /* --------------------------------------------------------------------------
@@ -83,7 +83,7 @@
     font-size: 16px;
 
     padding: 6px 10px;
-    transition: .15s ease;
+    transition: 0.15s ease;
 }
 
 .btn_card_start:hover {
@@ -123,7 +123,7 @@
     right: 15px;
     bottom: 10px;
 
-    transition: .15s ease;
+    transition: 0.15s ease;
 }
 
 .close_card:hover {
@@ -161,7 +161,7 @@
 
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
-    transition: .15s ease;
+    transition: 0.15s ease;
     user-select: none;
 }
 
@@ -261,7 +261,7 @@
     border: 1px solid rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(14px);
 
-    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
 .text_card {
@@ -405,7 +405,7 @@
 
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(6px);
-    z-index: 3; 
+    z-index: 3;
 }
 
 /**
@@ -431,8 +431,8 @@
     backdrop-filter: blur(14px);
 
     box-shadow:
-        0 0 30px rgba(0, 0, 0, .6),
-        inset 0 0 20px rgba(255, 255, 255, .02);
+        0 0 30px rgba(0, 0, 0, 0.6),
+        inset 0 0 20px rgba(255, 255, 255, 0.02);
 
     overflow: hidden;
     user-select: none;
@@ -445,7 +445,7 @@
     font-weight: 600;
     color: #f1f1f1;
     margin-bottom: 15px;
-    
+
     /* Evita que el título se encoja si el contenido interno crece */
     flex-shrink: 0;
 }
@@ -464,7 +464,7 @@
     font-size: 26px;
 
     cursor: pointer;
-    transition: .15s ease;
+    transition: 0.15s ease;
 }
 
 .config-close:hover {
@@ -554,7 +554,7 @@
     background-color: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 999px;
-    transition: .2s ease;
+    transition: 0.2s ease;
 }
 
 /**
@@ -573,7 +573,7 @@
 
     background-color: #bdbdbd;
     border-radius: 50%;
-    transition: .2s ease;
+    transition: 0.2s ease;
 }
 
 /**
@@ -602,10 +602,10 @@
     border-radius: 10px;
     padding: 8px 13px;
 
-    font-size: .9rem;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    transition: .25s ease;
+    transition: 0.25s ease;
 }
 
 .config-report-btn:hover {
@@ -614,7 +614,9 @@
 }
 
 .config-report-btn:active {
-    transform: translateY(0); /* Simulación física de pulsación al hacer click */
+    transform: translateY(
+        0
+    ); /* Simulación física de pulsación al hacer click */
 }
 
 /* ==========================================================================
@@ -634,13 +636,17 @@
     padding: 0;
 
     border-radius: 32px;
-    background: linear-gradient(180deg, rgba(20, 20, 20, .96), rgba(10, 10, 10, .96));
+    background: linear-gradient(
+        180deg,
+        rgba(20, 20, 20, 0.96),
+        rgba(10, 10, 10, 0.96)
+    );
 
-    border: 1px solid rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 
     box-shadow:
-        0 0 40px rgba(0, 0, 0, .6),
-        inset 0 0 20px rgba(255, 255, 255, .02);
+        0 0 40px rgba(0, 0, 0, 0.6),
+        inset 0 0 20px rgba(255, 255, 255, 0.02);
 
     overflow: hidden;
     user-select: none;
@@ -660,9 +666,9 @@
     height: 120px;
     flex-shrink: 0;
 
-    background: url("../Images/banner.png") center center no-repeat;
+    background: url("../images/banner.png") center center no-repeat;
     background-size: contain;
-    border-bottom: 1px solid rgba(255, 255, 255, .06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /**
@@ -672,7 +678,7 @@
     margin: 25px auto 15px;
     color: white;
 
-    font-family: 'Oxanium', sans-serif;
+    font-family: "Oxanium", sans-serif;
     font-size: 32px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -700,7 +706,7 @@
     color: #8f8f8f;
     font-size: 13px;
 
-    font-family: 'Oxanium', sans-serif;
+    font-family: "Oxanium", sans-serif;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
@@ -735,8 +741,8 @@
 .donate_method span {
     color: #d0d0d0;
     font-size: 14px;
-    font-family: 'Oxanium', sans-serif;
-    letter-spacing: .5px;
+    font-family: "Oxanium", sans-serif;
+    letter-spacing: 0.5px;
 }
 
 /**
@@ -752,23 +758,23 @@
     background-size: cover;
     background-position: center 1%;
 
-    border: 1px solid rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
     box-shadow:
-        0 0 20px rgba(0, 0, 0, .5),
-        inset 0 0 15px rgba(255, 255, 255, .03);
+        0 0 20px rgba(0, 0, 0, 0.5),
+        inset 0 0 15px rgba(255, 255, 255, 0.03);
 
-    transition: .25s ease;
+    transition: 0.25s ease;
 }
 
 /* Carga del QR Local/Nacional */
 .qr_national {
-    background-image: url("../Images/breb.jpeg");
+    background-image: url("../images/breb.jpeg");
 }
 
 /* Carga del QR Global/Paypal */
 .qr_international {
-    background-image: url("../Images/paypal.jpeg");
+    background-image: url("../images/paypal.jpeg");
 }
 
 /**
@@ -779,9 +785,9 @@
 .qr_national:hover,
 .qr_international:hover {
     transform: translateY(-5px);
-    border-color: rgba(255, 255, 255, .18);
+    border-color: rgba(255, 255, 255, 0.18);
 
     box-shadow:
-        0 0 35px rgba(255, 255, 255, .08),
-        0 0 25px rgba(0, 0, 0, .6);
+        0 0 35px rgba(255, 255, 255, 0.08),
+        0 0 25px rgba(0, 0, 0, 0.6);
 }

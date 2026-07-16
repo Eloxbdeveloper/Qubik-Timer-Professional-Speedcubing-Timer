@@ -278,7 +278,7 @@
         height: clamp(90px, 16vh, 160px);
         flex-shrink: 0;
 
-        background: url("../Images/banner.png") center/contain no-repeat;
+        background: url("../images/banner.png") center/contain no-repeat;
         margin-top: 20px;
     }
 

@@ -1,0 +1,25 @@
+{
+    "name": "Qubik Timer",
+    "short_name": "Qubik",
+    "description": "Professional Speedcubing Timer",
+    "id": "/",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#111827",
+    "theme_color": "#2563eb",
+    "orientation": "portrait",
+    "lang": "en-US",
+    "icons": [
+        {
+            "src": "/src/images/logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/src/images/logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
