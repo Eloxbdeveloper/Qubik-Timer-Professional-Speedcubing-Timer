@@ -60,6 +60,13 @@ window.addEventListener("DOMContentLoaded", () => {
         overlay.classList.add("nav-overlay");
         overlay.addEventListener("click", closeNav);
         contenedor?.appendChild(overlay);
+
+        document
+            .querySelector(".js-open-donation-modal")
+            ?.addEventListener("click", closeNav, { once: true });
+        document
+            .querySelector(".js-open-settings-modal")
+            ?.addEventListener("click", closeNav, { once: true });
     }
 
     function closeNav() {
